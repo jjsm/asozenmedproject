@@ -14,15 +14,15 @@
 	<div  id='dlgPrestamo' style='display:none'>
 		<form  id='frmPrestamo' method='post' class="form-inline" role="form" >
 	        					 <input type='hidden' name='id'  id='id-prestamo'>
-	        <div class="form-group"><input type='text'  class="form-control required clean" name='prestamo' id='txtPrestamo' placeholder="Fecha Prestamo"/></div>
-	       	<div class="form-group"><input type='text'  class="form-control required clean" name='entrega' id='txtEntrega' placeholder="Fecha Entrega" /></div>
-	        <div class="form-group"><input type='text'  class="form-control required clean" name='practicante' id='txtPracticante' placeholder="Practicante"/></div>
+	        <div class="form-group"><input type='text'  class="form-control required clean" name='prestamo' id='txtPrestamo' placeholder="Fecha Prestamo"/></div><br>
+	       	<div class="form-group"><input type='text'  class="form-control required clean" name='entrega' id='txtEntrega' placeholder="Fecha Entrega" /></div><br>
+	        <div class="form-group"><input type='text'  class="form-control required clean" name='practicante' id='txtPracticante' placeholder="Busque Practicante"/></div><br>
 	        					<input type='hidden' name='id-practicante'  id='id-practicante'>
-	        <div class="form-group"><input type='text'  class="form-control required clean" name='prestado' id='txtPrestado' placeholder="Prestador"/></div>
+	        <div class="form-group"><input type='text'  class="form-control required clean" name='prestado' id='txtPrestado' placeholder="Busque Prestador"/></div><br>
 	        					<input type='hidden' name='id-prestado'  id='id-prestado'>
 	        					
 	        <div class="form-group"><input type='text' class="form-control required clean" name='libro' id='txtLibro' placeholder="Busque Un Libro"/>
-	        						<input type='button' class="form-control " name="insertarlibro" value="Libro" id="btnInsertarLibro"/></div>
+	        						<input type='button' class="form-control " name="insertarlibro" value="Libro" id="btnInsertarLibro"/></div><br>
 	        						<input type='hidden' name='id-libro'  id='id-libro'>
 	        					
 	        					

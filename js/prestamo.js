@@ -55,18 +55,17 @@ $(document).ready(function () {
 
 
 function adminPrestamo(opt,option){
-	var url="";
-	
+    var url="";
+    var id = "";
 	if(option == "editar"){
 		var myOptions = opt.split(',');
-	    var id = myOptions[0];
+	    id = myOptions[0];
 	    var practicante = myOptions[1];
 	    var id_practicante = myOptions[2];
 	    var prestamo = myOptions[3];
 	    var entrega = myOptions[4];
 	    var prestador= myOptions[5];
 	    var id_prestador= myOptions[6];
-	    url = 'controllers/PrestamosController.php?op=';//Falta##################
 	}
 
  // Dialogo
@@ -74,16 +73,17 @@ function adminPrestamo(opt,option){
             resizable:false,
             title:'Prestamo.',
             height:600,
-            width:800,
+            width:450,
             modal:true,
             open:function(){
-            	
+            	$("#id-prestamo").val("");
             	$(".clean").val("");
+                cargarGridDetallePrestamo(id);
     			$("#frmPrestamo").validate({  
     				  
     				rules: {  
-    					prestamo:  {required: true, date:true},  
-    					entrega: {required: true, date: true},  
+    					prestamo:  {required: true},  
+    					entrega: {required: true},  
     					practicante:  {required: true},                
     					prestado: {required: true},        
     					libro:{required: true}  
@@ -107,13 +107,13 @@ function adminPrestamo(opt,option){
     				}  
     			});
 				
-				//controllers/PrestamosController.php?op=2&detalle='+idDetalle
+
 						jQuery("#jqgDetallePrestamo").jqGrid({ 
 							url:'controllers/PrestamosController.php?op=2&id='+id, 
 							datatype: "json",
 							mtype: 'POST',
 							height: 190,
-							width: 800, 
+							width: 400, 
 							colNames:['id','codigo','titulo','action'], 
 							colModel:[ 
 							{name:'id',index:'id', width:10,hidden:true}, 
@@ -165,13 +165,9 @@ function adminPrestamo(opt,option){
 									type : $('#frmPrestamo').attr("method"),
 									data : $('#frmPrestamo').serialize(),
 									complete:function (jqXHR,status) {
-
+                                        debugger;
 										$("#id-prestamo").val(jqXHR.responseText);
 										cargarGridDetallePrestamo(jqXHR.responseText);	
-									},
-									succes:function(data){
-										$("#id-prestamo").val(data);
-										cargarGridDetallePrestamo(data);
 									},
 									error:function (error) {
 										$("#dlgPrestamo").dialog("close");
@@ -197,6 +193,7 @@ function adminPrestamo(opt,option){
 }
 
 	function cargarGridDetallePrestamo(idDetalle){
+        debugger;
 		var url = 'controllers/PrestamosController.php?op=2&id='+idDetalle;
 		$("#jqgDetallePrestamo").jqGrid('setGridParam', { url: url });
 		$("#jqgDetallePrestamo").trigger("reloadGrid");					

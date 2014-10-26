@@ -112,20 +112,20 @@ function adminUsuario(opt,option){
 				},  
 				messages: {  
 					cedula:{  
-						required: "*Rquerido" 
+						required: "*Requerido" 
 					},  
 					usuario:{  
-						required: "*Rquerido"  
+						required: "*Requerido"  
 					},  
 					correo: {  
-						required: "*Rquerido",  
+						required: "*Requerido",  
 						email:    "Formato no valido: Correo"						
 					},  
 					celular:{
-						required: "*Rquerido"
+						required: "*Requerido"
 					},
 					telefono:{
-						required: "*Rquerido"
+						required: "*Requerido"
 					}
 				}  
 			});

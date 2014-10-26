@@ -1,5 +1,9 @@
 asozenmedproject
 
+http://flasheina.blogspot.com/2011/07/corregir-warning-del-timezone-en-php-53.html
+http://foro.comunidadjoomla.org/general-15x/errores-warning-date-t2165.html
+http://www.americandominios.com/conta/knowledgebase/398/error--Warning-date-functiondate--o-Warning-strtotime-functionstrtotime-It-is-not-safe-to-rely-on-the-systems-timezone-settings.html
+
 
 ###Por hacer
 vaciar campos ,validar alinear

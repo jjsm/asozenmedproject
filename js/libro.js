@@ -83,8 +83,8 @@ function adminLibro(opt,option){
         $("#dlgLibro").dialog({
         resizable:false,
         title:'Libro.',
-        height:300,
-        width:350,
+        height:370,
+        width:450,
         modal:true,
         open:function(){
         	
@@ -93,21 +93,17 @@ function adminLibro(opt,option){
 			$("#frmLibro").validate({  
 				  
 				rules: {  
-					titulo:{required: true},  
-					codigo:{required: true},  
-					descripcion:{required: true},                
+					titulo:{required: true,minlength: 10,},  
+					codigo:{required: true},                  
 					editorial:{required: true},        
-					año:{required: true}, 
-					observaciones:{required: true}, 
+					año:{required: true,number:true},  
 					autores:{required: true} 
 				},  
 				messages: {  
 					titulo:{required: "*Requerido" },  
-					codigo:{required: "*Requerido" },  
-					descripcion:{required: "*Requerido" },                
+					codigo:{required: "*Requerido" },                 
 					editorial:{required: "*Requerido" },        
-					año:{required: "*Requerido" }, 
-					observaciones:{required: "*Requerido" }, 
+					año:{required: "*Requerido" },  
 					autores:{required: "*Requerido" }
 				}  
 			});

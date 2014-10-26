@@ -3,7 +3,12 @@
 <head>
     <meta charset="utf-8" />
 	<script type="text/javascript" src="js/libro.js"></script>
-</head>
+	<style type="text/css">
+		#frmLibro label.error, .output {color:#FB3A3A;font-weight:bold;}
+	</style>
+    
+    </head>
+    
 <body>
 
     <table id='jqgLibro'></table>
