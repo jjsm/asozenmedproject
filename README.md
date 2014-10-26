@@ -59,5 +59,33 @@ idPrestamo integer,
  FOREIGN KEY (idLibros) REFERENCES tblLibros(id_libro),
 PRIMARY KEY (id_detallePrestamo)
 );
+=================
+HACER COMMIT
+# Inicializamos el repositorio local Git
+    git init
+    # Agregamos todo (archivos y directorios) al repositorio
+    git add .
+    # Hacemos un commit al repositorio
+    git commit -m "Initial commit"
+    # Muestra el log (un historial)
+    git log
+    
+# git push
+
+# parts install php5 php5-apache2 php5-pdo-mysql php5-zlib mysql
+================
+
+Setting up a MySQL Database
+
+We now need to get a MySQL database setup and usable by Wordpress.
+
+    Log into the MySQL shell mysql -u root -p
+    Press Enter when asked for a password (you can/should set one up, but by default there is none after the install).
+    You should now see the '>' prompt. Enter the following CREATE DATABASE wordpress;
+    We'll create a user CREATE USER wordpressuser@localhost;
+    ... and a password SET PASSWORD FOR wordpressuser@localhost= PASSWORD("password");
+    Now we'll grant that user all privileges GRANT ALL PRIVILEGES ON wordpress.* TO wordpressuser@localhost IDENTIFIED BY 'password';
+    Let's flush privileges FLUSH PRIVILEGES;
+    and exit the MySQL shell by entering exit
 
 ================
