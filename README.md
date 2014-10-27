@@ -5,6 +5,8 @@ http://foro.comunidadjoomla.org/general-15x/errores-warning-date-t2165.html
 http://www.americandominios.com/conta/knowledgebase/398/error--Warning-date-functiondate--o-Warning-strtotime-functionstrtotime-It-is-not-safe-to-rely-on-the-systems-timezone-settings.html
 
 
+http://stackoverflow.com/questions/3357441/jquery-ui-autocomplete-does-not-select-on-enter
+
 ###Por hacer
 vaciar campos ,validar alinear
 

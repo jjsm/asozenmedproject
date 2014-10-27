@@ -49,14 +49,28 @@ $(document).ready(function () {
 		adminPrestamo();
     }
 	
-     $( "#txtPrestamo").datepicker({dateFormat: 'dd-mm-yy',});
-     $('#txtEntrega').datepicker({dateFormat: 'dd-mm-yy',});
+     $( "#txtPrestamo").datepicker({dateFormat: 'dd-mm-yy'}).datepicker("setDate",new Date());
+    
+     $('#txtEntrega').datepicker({dateFormat: 'dd-mm-yy'}).datepicker("setDate",new Date());
+    
 });
 
 
 function adminPrestamo(opt,option){
     var url="";
     var id = "";
+    
+    var fullDate = new Date();
+    var twoDigitMonth = (fullDate.getMonth()+1)+"";if(twoDigitMonth.length==1)  twoDigitMonth="0" +twoDigitMonth;
+    var twoDigitDate = fullDate.getDate()+"";if(twoDigitDate.length==1) twoDigitDate="0" +twoDigitDate;
+    var currentDate = twoDigitDate + "-" + twoDigitMonth + "-" + fullDate.getFullYear();
+    
+    var fullDate2=new Date().setDate(fullDate.getDate()+5);
+    var twoDigitMonthMore = (fullDate2.getMonth())+"";if(twoDigitMonthMore.length==1)  twoDigitMonthMore="0" +twoDigitMonthMore;
+    var twoDigitDateMore = fullDate2.getDate()+"";if(twoDigitDateMore.length==1) twoDigitDateMore="0" +twoDigitDateMore;
+    var currentDateMore = twoDigitDateMore + "-" + twoDigitDateMore + "-" + fullDate2.getFullYear();
+    
+    
 	if(option == "editar"){
 		var myOptions = opt.split(',');
 	    id = myOptions[0];
@@ -131,7 +145,8 @@ function adminPrestamo(opt,option){
 							toppager: true
 						})
             	
-            	
+            	$("#txtPrestamo").val(currentDate);
+                $("#txtEntrega").val(currentDateMore);
 						if(option  == "editar"){
 							$("#id-prestamo").val(id);
 							$("#txtPrestamo").val(prestamo);
@@ -165,9 +180,10 @@ function adminPrestamo(opt,option){
 									type : $('#frmPrestamo').attr("method"),
 									data : $('#frmPrestamo').serialize(),
 									complete:function (jqXHR,status) {
-                                        debugger;
 										$("#id-prestamo").val(jqXHR.responseText);
 										cargarGridDetallePrestamo(jqXHR.responseText);	
+                                        $("#txtLibro").val("");
+                                        $("#txtLibro").focus();
 									},
 									error:function (error) {
 										$("#dlgPrestamo").dialog("close");
@@ -191,6 +207,10 @@ function adminPrestamo(opt,option){
             }
         });
 }
+
+    function addDays(theDate, days) {
+         return new Date(theDate.getTime() + days*24*60*60*1000);
+    }
 
 	function cargarGridDetallePrestamo(idDetalle){
         debugger;

@@ -1,2 +1,2 @@
-parts stop apache2
-parts start apache2
+parts stop apache2 mysql
+parts start apache2 mysql
