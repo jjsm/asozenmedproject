@@ -65,12 +65,6 @@ function adminPrestamo(opt,option){
     var twoDigitDate = fullDate.getDate()+"";if(twoDigitDate.length==1) twoDigitDate="0" +twoDigitDate;
     var currentDate = twoDigitDate + "-" + twoDigitMonth + "-" + fullDate.getFullYear();
     
-    var fullDate2=new Date().setDate(fullDate.getDate()+5);
-    var twoDigitMonthMore = (fullDate2.getMonth())+"";if(twoDigitMonthMore.length==1)  twoDigitMonthMore="0" +twoDigitMonthMore;
-    var twoDigitDateMore = fullDate2.getDate()+"";if(twoDigitDateMore.length==1) twoDigitDateMore="0" +twoDigitDateMore;
-    var currentDateMore = twoDigitDateMore + "-" + twoDigitDateMore + "-" + fullDate2.getFullYear();
-    
-    
 	if(option == "editar"){
 		var myOptions = opt.split(',');
 	    id = myOptions[0];
@@ -146,7 +140,6 @@ function adminPrestamo(opt,option){
 						})
             	
             	$("#txtPrestamo").val(currentDate);
-                $("#txtEntrega").val(currentDateMore);
 						if(option  == "editar"){
 							$("#id-prestamo").val(id);
 							$("#txtPrestamo").val(prestamo);

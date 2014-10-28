@@ -1,5 +1,6 @@
 <?php
 require_once '../class/Prestamos.php';
+require_once '../class/Libros.php';
 
 $prestamos = Prestamos::singleton();
 
@@ -40,15 +41,20 @@ function insertarPrestamo($prestamos){
 	$prestado = $_POST['id-prestado'];
 	$idLibro = $_POST['id-libro'];
 	$idPrestamo = $_POST['id'];
+    $libros = Libros::singleton();
 	//Valida antes si el encabezado ya no fue creado cuando se inserta un libro por primera vez 
 	if(empty($idPrestamo)){
 		$valores = array($f_prestamo,$f_entrega,$practicante,$prestado);
 		$idPrestamo =$prestamos->insertarEncabezadoPrestamo($valores);
 	}
-
+    //Si existe libro y prestamo se agrega al detalle
 	if(!empty($idPrestamo) && !empty($idLibro)){
+       
 		$valores2=array($idLibro,$idPrestamo);
 		$prestamos->insertarLibroPrestamo($valores2);
+        //
+        $valores3=array(0,$idLibro);
+        $libros->actualizarEstadoLibro($valores3);
 	}
 	
 	echo $idPrestamo;

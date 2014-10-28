@@ -69,5 +69,11 @@ class Libros
     	}
     	return $result;
     }
+    
+    public function actualizarEstadoLibro($valores){
+        $oConectar = new consultarDB;
+    	$sql='UPDATE tblLibros SET estado = ?   WHERE id_libro= ?';
+    	$oConectar->ejecutarSentencia($valores,$sql);
+    }
 }
 ?>
