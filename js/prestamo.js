@@ -122,11 +122,12 @@ function adminPrestamo(opt,option){
 							mtype: 'POST',
 							height: 190,
 							width: 400, 
-							colNames:['id','codigo','titulo','action'], 
+							colNames:['id','codigo','titulo','','action'], 
 							colModel:[ 
 							{name:'id',index:'id', width:10,hidden:true}, 
-							{name:'codigo',index:'practicante',  width: 10}, 
-							{name:'titulo',index:'idPracticante',  width: 10},
+							{name:'codigo',index:'codigo',  width: 10}, 
+							{name:'titulo',index:'titulo',  width: 10},
+                            {name:'idLibro',index:'idLibro',width: 10,hidden:true},
 							{name:'action',index:'action',sortable:false, width: 10, formatter: displayButtonsDetalle},
 							], 
 							pager: '#pager-detalleprestamo', 
@@ -201,10 +202,6 @@ function adminPrestamo(opt,option){
         });
 }
 
-    function addDays(theDate, days) {
-         return new Date(theDate.getTime() + days*24*60*60*1000);
-    }
-
 	function cargarGridDetallePrestamo(idDetalle){
         debugger;
 		var url = 'controllers/PrestamosController.php?op=2&id='+idDetalle;
@@ -213,7 +210,34 @@ function adminPrestamo(opt,option){
 	}
 	
 	function displayButtonsDetalle(cellvalue, options, rowObject)
-    {	var id = rowObject[0];
-        var edit = "<input  type='button' id=\"editarPrestamo"+id+"\"   value='Editar' onclick=\"adminPrestamo('"+rowObject+"','editar');\"    />"; 
+    {
+        var id = rowObject[0];
+        var edit = "<input  type='button' id=\"actualizarLibro"+id+"\"   value='Editar' onclick=\"actualizarEstadoLibro('"+rowObject+"');\"    />"; 
         return edit;
     }
+
+function actualizarEstadoLibro(obj){
+     var myOptions = obj.split(',');
+     var idLibro = myOptions[3];
+        console("idLibro"+idLibro);
+    /*
+    $.ajax({
+        url :'controllers/PrestamosController.php?op=3&id='+ ,
+        type : "post",
+        complete:function (jqXHR,status) {
+            
+        },
+        error:function (error) {
+            $("#dlgPrestamo").dialog("close");
+            $("<div class='edit_modal'>Ha ocurrido un error!</div>").dialog({
+                resizable:false,
+                title:'Error!.',
+                height:200,
+                width:450,
+                modal:true
+            });
+        }
+    });*/
+    
+}
+

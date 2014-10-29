@@ -69,7 +69,8 @@ class Prestamos
     	$sql1 = "SELECT COUNT(*) AS count FROM tblDetallePrestamo ";
     	$sql2 = "SELECT  detallePrestamo.id_detallePrestamo  AS id,
 						libros.codigo as codigo,
-						libros.titulo as titulo
+						libros.titulo as titulo,
+                        libros.id_libro as idLibro
     
 				FROM 	tblDetallePrestamo detallePrestamo
 					INNER JOIN tblPrestamos prestamos ON detallePrestamo.idPrestamo = prestamos.id_prestamo

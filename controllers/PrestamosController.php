@@ -14,6 +14,9 @@ switch ($_GET["op"]) {
 	case 2:
 			listarDetallePrestamo($prestamos,$_GET["id"]);
 			break;
+    case 3:
+			actualizarEstadoLibro($prestamos,$_GET["id"]);
+			break;
 	
 }
 
@@ -73,6 +76,10 @@ function listarDetallePrestamo($prestamos,$detalle){
 	$array = $prestamos->listarDetalleprestamo($post,$detalle);
 	
 	echo json_encode($array);
+}
+
+function actualizarEstadoLibro($id){
+    
 }
 
 ?>
