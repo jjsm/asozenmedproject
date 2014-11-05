@@ -20,7 +20,7 @@ $(document).ready(function () {
 		          ], 
 		 pager: '#pager-prestamo', 
 		 rowNum:10, 
-		 rowList:[10,20,30], 
+		 rowList:[100,200,300], 
 		 sortname: 'id', 
 		 sortorder: "asc",
 		 viewrecords: true, 
@@ -122,17 +122,25 @@ function adminPrestamo(opt,option){
 							mtype: 'POST',
 							height: 190,
 							width: 400, 
-							colNames:['id','codigo','titulo','','action'], 
+							colNames:['id','codigo','titulo','idLibro','estado','fechaDevuelto','action'], 
 							colModel:[ 
 							{name:'id',index:'id', width:10,hidden:true}, 
 							{name:'codigo',index:'codigo',  width: 10}, 
 							{name:'titulo',index:'titulo',  width: 10},
                             {name:'idLibro',index:'idLibro',width: 10,hidden:true},
+                            {name:'estado',index:'estado',width: 10},
+                            {name:'fechaDevuelto',index:'fechaDevuelto',width: 10},
 							{name:'action',index:'action',sortable:false, width: 10, formatter: displayButtonsDetalle},
 							], 
-							pager: '#pager-detalleprestamo', 
+                                afterInsertRow : function(rowid, rowdata)
+                                {
+                                if (rowdata.estado == "1"){
+                                 $("#actualizarLibro"+rowid).hide();
+                                }
+                                },
+                            pager: '#pager-detalleprestamo', 
 							rowNum:10, 
-							rowList:[10,20,30], 
+							rowList:[100,200,300], 
 							sortname: 'id', 
 							sortorder: "asc",
 							viewrecords: true, 
@@ -212,20 +220,21 @@ function adminPrestamo(opt,option){
 	function displayButtonsDetalle(cellvalue, options, rowObject)
     {
         var id = rowObject[0];
-        var edit = "<input  type='button' id=\"actualizarLibro"+id+"\"   value='Editar' onclick=\"actualizarEstadoLibro('"+rowObject+"');\"    />"; 
+        var edit = "<input  type='button' id=\"actualizarLibro"+id+"\"   value='Entregar' onclick=\"actualizarEstadoLibro('"+rowObject+"');\"    />"; 
         return edit;
     }
 
 function actualizarEstadoLibro(obj){
      var myOptions = obj.split(',');
      var idLibro = myOptions[3];
-        console("idLibro"+idLibro);
-    /*
+     var idDetallePrestamo = myOptions[0];
+    
     $.ajax({
-        url :'controllers/PrestamosController.php?op=3&id='+ ,
+        url :'controllers/PrestamosController.php?op=3&id='+idLibro ,
         type : "post",
         complete:function (jqXHR,status) {
-            
+          $("#jqgDetallePrestamo").trigger("reloadGrid");
+          actualizarFechaDetallePrestamo(idDetallePrestamo);
         },
         error:function (error) {
             $("#dlgPrestamo").dialog("close");
@@ -237,7 +246,29 @@ function actualizarEstadoLibro(obj){
                 modal:true
             });
         }
-    });*/
+    });
+}
+
+
+function actualizarFechaDetallePrestamo(idDetalle){
+    
+        $.ajax({
+        url :'controllers/PrestamosController.php?op=4&id='+idDetalle ,
+        type : "post",
+        complete:function (jqXHR,status) {
+            $("#jqgDetallePrestamo").trigger("reloadGrid");
+        },
+        error:function (error) {
+            $("#dlgPrestamo").dialog("close");
+            $("<div class='edit_modal'>Ha ocurrido un error!</div>").dialog({
+                resizable:false,
+                title:'Error!.',
+                height:200,
+                width:450,
+                modal:true
+            });
+        }
+    });
     
 }
 

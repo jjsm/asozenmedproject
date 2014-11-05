@@ -1,19 +1,12 @@
 asozenmedproject
 
-http://flasheina.blogspot.com/2011/07/corregir-warning-del-timezone-en-php-53.html
-http://foro.comunidadjoomla.org/general-15x/errores-warning-date-t2165.html
-http://www.americandominios.com/conta/knowledgebase/398/error--Warning-date-functiondate--o-Warning-strtotime-functionstrtotime-It-is-not-safe-to-rely-on-the-systems-timezone-settings.html
-
-
-http://stackoverflow.com/questions/3357441/jquery-ui-autocomplete-does-not-select-on-enter
 
 ###Por hacer
-vaciar campos ,validar alinear
 
-en prestamos al abrir dialogo poner fecha actual
-y segun fecha actual poner la fecha de quince dias hacia adelante
+- Cuadrar el paginador del jqgrid
+- Al crear libro ingresar el estado 1 (activo)
+- un boton en la lista de prestamos para cerrar el prestamo solo si todos los libros estan en 1
 
-en prestamos al seleccionar libro e insertar borrarlo del campo
 
 tabla estado --->parcial/ completo,aplazado, pasofecha
 

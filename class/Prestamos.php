@@ -59,7 +59,7 @@ class Prestamos
     public function insertarLibroPrestamo($valores)
     {	
     	$oConectar = new consultarDB;
-    	$sql='INSERT INTO tblDetallePrestamo VALUES (null,Now(),?,?)';
+    	$sql='INSERT INTO tblDetallePrestamo VALUES (null,null,?,?)';
     	$id =$oConectar->ejecutarSentencia($valores,$sql);
     	return $id;
     }
@@ -70,7 +70,9 @@ class Prestamos
     	$sql2 = "SELECT  detallePrestamo.id_detallePrestamo  AS id,
 						libros.codigo as codigo,
 						libros.titulo as titulo,
-                        libros.id_libro as idLibro
+                        libros.id_libro as idLibro,
+                        libros.estado  as estado,
+                        detallePrestamo.fechaDevuelto as fechaDevuelto
     
 				FROM 	tblDetallePrestamo detallePrestamo
 					INNER JOIN tblPrestamos prestamos ON detallePrestamo.idPrestamo = prestamos.id_prestamo
@@ -83,7 +85,7 @@ class Prestamos
     	$i = 0;
     	foreach ($resultados[0] as $row) {
     		$result[$i]['id']=$row["id"];
-    		$result[$i]['cell']=array($row["id"],$row["codigo"],$row["titulo"]);
+    		$result[$i]['cell']=array($row["id"],$row["codigo"],$row["titulo"],$row["idLibro"],$row["estado"],$row["fechaDevuelto"]);
     		$i++;
     	}
     	//Asignamos todo esto en variables de json, para enviarlo al navegador.
@@ -95,6 +97,12 @@ class Prestamos
     	$oConectar = new consultarDB;
     	$sql='UPDATE tblPrestamos SET fechaPrestamo = ?,fechaEntrega = ?,fechaRegistro = Now() , idUsuarios = ? , idPrestamista = ? WHERE id_prestamo = ?';
     	$oConectar->ejecutarSentencia($valores,$sql);
+    }
+    
+    public function actualizarFechaDetalle($valores){
+        $oConectar = new consultarDB;
+        $sql = 'UPDATE tblDetallePrestamo SET fechaDevuelto= Now() WHERE id_detallePrestamo= ? ';
+        $oConectar->ejecutarSentencia($valores,$sql);
     }
  
 }

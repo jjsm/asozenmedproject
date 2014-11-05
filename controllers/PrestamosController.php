@@ -15,8 +15,14 @@ switch ($_GET["op"]) {
 			listarDetallePrestamo($prestamos,$_GET["id"]);
 			break;
     case 3:
-			actualizarEstadoLibro($prestamos,$_GET["id"]);
+            $id= $_GET["id"];
+    
+			actualizarEstadoLibro($id);
 			break;
+    case 4: 
+            $id= $_GET["id"];
+            actualizarFechaDetalle($prestamos,$id);
+        break;
 	
 }
 
@@ -79,6 +85,15 @@ function listarDetallePrestamo($prestamos,$detalle){
 }
 
 function actualizarEstadoLibro($id){
+    $valores=array(1,$id);
+    $libros = Libros::singleton();
+    $libros->actualizarEstadoLibro($valores);
+}
+
+function actualizarFechaDetalle($prestamo,$id){
+    
+    $valores = array ($id);
+    $prestamo->actualizarFechaDetalle($valores);
     
 }
 
