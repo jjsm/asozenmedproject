@@ -124,14 +124,14 @@ function adminPrestamo(opt,option){
 							width: 400, 
 							colNames:['id','codigo','titulo','idLibro','estado','fechaDevuelto','action'], 
 							colModel:[ 
-							{name:'id',index:'id', width:10,hidden:true}, 
-							{name:'codigo',index:'codigo',  width: 10}, 
-							{name:'titulo',index:'titulo',  width: 10},
-                            {name:'idLibro',index:'idLibro',width: 10,hidden:true},
-                            {name:'estado',index:'estado',width: 10},
-                            {name:'fechaDevuelto',index:'fechaDevuelto',width: 10},
-							{name:'action',index:'action',sortable:false, width: 10, formatter: displayButtonsDetalle},
-							], 
+                                {name:'id',index:'id', width:10,hidden:true}, 
+                                {name:'codigo',index:'codigo',  width: 10}, 
+                                {name:'titulo',index:'titulo',  width: 10},
+                                {name:'idLibro',index:'idLibro',width: 10,hidden:true},
+                                {name:'estado',index:'estado',width: 10,hidden:true},
+                                {name:'fechaDevuelto',index:'fechaDevuelto',width: 10},
+                                {name:'action',index:'action',sortable:false, width: 10, formatter: displayButtonsDetalle},
+                             ], 
                                 afterInsertRow : function(rowid, rowdata)
                                 {
                                 if (rowdata.estado == "1"){
@@ -185,7 +185,7 @@ function adminPrestamo(opt,option){
 										$("#id-prestamo").val(jqXHR.responseText);
 										cargarGridDetallePrestamo(jqXHR.responseText);	
                                         $("#txtLibro").val("");
-                                        $("#txtLibro").focus();
+                                        $("#txtLibro").focus();	
 									},
 									error:function (error) {
 										$("#dlgPrestamo").dialog("close");
@@ -204,14 +204,32 @@ function adminPrestamo(opt,option){
             },
             buttons:{
                 "OK":function () {
-                	$("#dlgPrestamo").dialog("close");
+                    
+                     $.ajax({
+									url :'controllers/PrestamosController.php?op=5' ,
+									type : $('#frmPrestamo').attr("method"),
+									data : $('#frmPrestamo').serialize(),
+									complete:function (jqXHR,status) {
+										$("#dlgPrestamo").dialog("close");	
+									},
+									error:function (error) {
+										$("#dlgPrestamo").dialog("close");
+										$("<div class='edit_modal'>Ha ocurrido un error!</div>").dialog({
+											resizable:false,
+											title:'Error!.',
+											height:200,
+											width:450,
+											modal:true
+										});
+									}
+								});
                 }
             }
         });
 }
 
 	function cargarGridDetallePrestamo(idDetalle){
-        debugger;
+
 		var url = 'controllers/PrestamosController.php?op=2&id='+idDetalle;
 		$("#jqgDetallePrestamo").jqGrid('setGridParam', { url: url });
 		$("#jqgDetallePrestamo").trigger("reloadGrid");					

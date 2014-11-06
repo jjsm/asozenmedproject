@@ -51,7 +51,7 @@ class Prestamos
     public function insertarEncabezadoPrestamo($valores)
     {		
     	$oConectar = new consultarDB;
-    	$sql='INSERT INTO tblPrestamos VALUES (null,?,?,Now(),?,?)';
+    	$sql='INSERT INTO tblPrestamos VALUES (null,?,?,null,?,?)';
     	$id = $oConectar->ejecutarSentencia($valores,$sql);
     	return $id;
     }
@@ -59,7 +59,7 @@ class Prestamos
     public function insertarLibroPrestamo($valores)
     {	
     	$oConectar = new consultarDB;
-    	$sql='INSERT INTO tblDetallePrestamo VALUES (null,null,?,?)';
+    	$sql='INSERT INTO tblDetallePrestamo VALUES (null,null,?,?,0)';
     	$id =$oConectar->ejecutarSentencia($valores,$sql);
     	return $id;
     }
@@ -71,8 +71,9 @@ class Prestamos
 						libros.codigo as codigo,
 						libros.titulo as titulo,
                         libros.id_libro as idLibro,
-                        libros.estado  as estado,
+                        detallePrestamo.estadoDetalle  as estado,
                         detallePrestamo.fechaDevuelto as fechaDevuelto
+                        
     
 				FROM 	tblDetallePrestamo detallePrestamo
 					INNER JOIN tblPrestamos prestamos ON detallePrestamo.idPrestamo = prestamos.id_prestamo
@@ -101,8 +102,16 @@ class Prestamos
     
     public function actualizarFechaDetalle($valores){
         $oConectar = new consultarDB;
-        $sql = 'UPDATE tblDetallePrestamo SET fechaDevuelto= Now() WHERE id_detallePrestamo= ? ';
+        $sql = 'UPDATE tblDetallePrestamo SET fechaDevuelto= Now(), estadoDetalle=1 WHERE id_detallePrestamo= ? ';
         $oConectar->ejecutarSentencia($valores,$sql);
+    }
+    
+    public function actualizarEncabezadoPrestamo($valores){
+        echo "Valores: " .$valores[0] ."  ".$valores[1]." ".$valores[2]."  ".$valores[3]."  ".$valores[4] ;
+        
+        $oConectar = new consultarDB;
+        $sql = 'UPDATE tblPrestamos SET fechaPrestamo= ?, fechaEntrega=?,fechaRegistro =null,idUsuarios = ?,idPrestamista=? WHERE id_prestamo= ? ';
+        $oConectar->ejecutarSentencia($valores,$sql); 
     }
  
 }

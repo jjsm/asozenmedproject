@@ -6,6 +6,8 @@ asozenmedproject
 - Cuadrar el paginador del jqgrid
 - Al crear libro ingresar el estado 1 (activo)
 - un boton en la lista de prestamos para cerrar el prestamo solo si todos los libros estan en 1
+- bloquear usuarios con mas de tres libros prestados
+- al editar fecha guardar en ok
 
 
 tabla estado --->parcial/ completo,aplazado, pasofecha
@@ -40,7 +42,7 @@ CREATE TABLE  tblPrestamos(
 id_prestamo integer auto_increment,
 fechaPrestamo datetime,
 fechaEntrega datetime,
-fechaRegistro datetime,
+fechaRegistro datetime, --cierra prestamo
 idUsuarios integer,
 idPrestamista integer,
  FOREIGN KEY (idUsuarios) REFERENCES tblusuarios(id_usuario),
@@ -54,6 +56,7 @@ id_detallePrestamo integer auto_increment,
 fechaDevuelto datetime,
 idLibros integer,
 idPrestamo integer,
+ estadoDetalle boolean,
  FOREIGN KEY (idPrestamo) REFERENCES tblPrestamos(id_prestamo),
  FOREIGN KEY (idLibros) REFERENCES tblLibros(id_libro),
 PRIMARY KEY (id_detallePrestamo)

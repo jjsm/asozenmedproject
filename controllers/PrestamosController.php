@@ -23,7 +23,10 @@ switch ($_GET["op"]) {
             $id= $_GET["id"];
             actualizarFechaDetalle($prestamos,$id);
         break;
-	
+				break;
+    case 5: 
+            actualizarPrestamo($prestamos);
+        break;
 }
 
 
@@ -58,7 +61,6 @@ function insertarPrestamo($prestamos){
 	}
     //Si existe libro y prestamo se agrega al detalle
 	if(!empty($idPrestamo) && !empty($idLibro)){
-       
 		$valores2=array($idLibro,$idPrestamo);
 		$prestamos->insertarLibroPrestamo($valores2);
         //
@@ -94,6 +96,22 @@ function actualizarFechaDetalle($prestamo,$id){
     
     $valores = array ($id);
     $prestamo->actualizarFechaDetalle($valores);
+    
+}
+
+function actualizarPrestamo($prestamos){
+   $f_prestamo = date('Y-m-d', strtotime($_POST['prestamo']));
+	$f_entrega = date('Y-m-d', strtotime($_POST['entrega']));
+	$practicante = $_POST['id-practicante'];
+	$prestado = $_POST['id-prestado'];
+	$idPrestamo = $_POST['id'];
+   
+
+	//Valida antes si el encabezado ya no fue creado cuando se inserta un libro por primera vez 
+	if(!empty($idPrestamo)){
+		$valores = array($f_prestamo,$f_entrega,$practicante,$prestado,$idPrestamo);
+		$prestamos->actualizarEncabezadoPrestamo($valores);
+	}
     
 }
 
