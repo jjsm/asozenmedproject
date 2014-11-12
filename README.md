@@ -8,6 +8,9 @@ asozenmedproject
 - un boton en la lista de prestamos para cerrar el prestamo solo si todos los libros estan en 1
 - bloquear usuarios con mas de tres libros prestados
 - al editar fecha guardar en ok
+- restringir libros en 0
+- hacer filtro en prestamo con prestamos cerrados o abiertos
+- revisar porq se abren ventanas de prestamos sin datos cuando se editan
 
 
 tabla estado --->parcial/ completo,aplazado, pasofecha
@@ -45,6 +48,7 @@ fechaEntrega datetime,
 fechaRegistro datetime, --cierra prestamo
 idUsuarios integer,
 idPrestamista integer,
+estadoPres boolean,
  FOREIGN KEY (idUsuarios) REFERENCES tblusuarios(id_usuario),
  FOREIGN KEY (idPrestamista) REFERENCES tblusuarios(id_usuario),
 PRIMARY KEY (id_prestamo)

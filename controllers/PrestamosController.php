@@ -27,6 +27,10 @@ switch ($_GET["op"]) {
     case 5: 
             actualizarPrestamo($prestamos);
         break;
+    
+    case 6: 
+            cerrarPrestamo($prestamos);
+       break;
 }
 
 
@@ -64,8 +68,8 @@ function insertarPrestamo($prestamos){
 		$valores2=array($idLibro,$idPrestamo);
 		$prestamos->insertarLibroPrestamo($valores2);
         //
-        $valores3=array(0,$idLibro);
-        $libros->actualizarEstadoLibro($valores3);
+        $valores3=array($idLibro);
+        $libros->actualizarEstadoLibro(0,$valores3);
 	}
 	
 	echo $idPrestamo;
@@ -87,9 +91,9 @@ function listarDetallePrestamo($prestamos,$detalle){
 }
 
 function actualizarEstadoLibro($id){
-    $valores=array(1,$id);
+    $valores=array($id);
     $libros = Libros::singleton();
-    $libros->actualizarEstadoLibro($valores);
+    $libros->actualizarEstadoLibro(1,$valores);
 }
 
 function actualizarFechaDetalle($prestamo,$id){
@@ -113,6 +117,25 @@ function actualizarPrestamo($prestamos){
 		$prestamos->actualizarEncabezadoPrestamo($valores);
 	}
     
+}
+
+function cerrarPrestamo($prestamos){
+    $idPrestamo= $_GET['id'];
+    $valores = array($idPrestamo);
+    //Cambia  fecha de  entrega del libro y estado del detalle
+    $prestamos->cerrarPrestamo($valores);
+    //cambia el estado del prestamo
+    $prestamos->actEstadoPrestamo($valores);
+    //consulta lo libros que no han sido entregados
+    $result = $prestamos->consultarLibrosPrestamo($valores);
+    
+    $idLibros = implode(",", $result);
+ 
+    //cambia el estado del libro para poner disponible
+    $valores2 = array($idLibros);
+    $libros = Libros::singleton();
+    $libros->actualizarEstadoLibro(1,$valores2);
+   
 }
 
 ?>

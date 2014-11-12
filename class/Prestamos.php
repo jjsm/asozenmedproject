@@ -51,7 +51,7 @@ class Prestamos
     public function insertarEncabezadoPrestamo($valores)
     {		
     	$oConectar = new consultarDB;
-    	$sql='INSERT INTO tblPrestamos VALUES (null,?,?,null,?,?)';
+    	$sql='INSERT INTO tblPrestamos VALUES (null,?,?,null,?,?,1)';
     	$id = $oConectar->ejecutarSentencia($valores,$sql);
     	return $id;
     }
@@ -59,7 +59,7 @@ class Prestamos
     public function insertarLibroPrestamo($valores)
     {	
     	$oConectar = new consultarDB;
-    	$sql='INSERT INTO tblDetallePrestamo VALUES (null,null,?,?,0)';
+    	$sql='INSERT INTO tblDetallePrestamo VALUES (null,null,?,?,1)';
     	$id =$oConectar->ejecutarSentencia($valores,$sql);
     	return $id;
     }
@@ -107,11 +107,37 @@ class Prestamos
     }
     
     public function actualizarEncabezadoPrestamo($valores){
-        echo "Valores: " .$valores[0] ."  ".$valores[1]." ".$valores[2]."  ".$valores[3]."  ".$valores[4] ;
         
         $oConectar = new consultarDB;
         $sql = 'UPDATE tblPrestamos SET fechaPrestamo= ?, fechaEntrega=?,fechaRegistro =null,idUsuarios = ?,idPrestamista=? WHERE id_prestamo= ? ';
         $oConectar->ejecutarSentencia($valores,$sql); 
+    }
+    
+    public function cerrarPrestamo($valores){
+      
+      $oConectar = new consultarDB;
+      $sql = 'UPDATE tblDetallePrestamo SET estadoDetalle=1, fechaDevuelto = Now() WHERE idPrestamo = ? AND  estadoDetalle!= 1 ';
+      $oConectar->ejecutarSentencia($valores,$sql);  
+    }
+    
+    public function consultarLibrosPrestamo($valores){
+        $oConectar = new consultarDB;
+        $sql = 'SELECT DISTINCT  idLibros  From tblDetallePrestamo WHERE idPrestamo=? ';
+        
+        $resultados =$oConectar->consultar_ac($valores,$sql);
+    	$result = array();
+        $i=0;
+    	foreach ($resultados as $row) {
+    		$result[$i]=$row["idLibros"];
+            $i++;
+    	}
+    	return $result;
+    }
+    
+    public function  actEstadoPrestamo($valores){
+     $oConectar = new consultarDB;
+     $sql = 'UPDATE tblPrestamos SET estadoPres=0 WHERE id_prestamo=? '  ;
+     $oConectar->ejecutarSentencia($valores,$sql);
     }
  
 }

@@ -41,8 +41,10 @@ $(document).ready(function () {
 	
 	function displayButtons(cellvalue, options, rowObject)
     {	var id = rowObject[0];
-        var edit = "<input  type='button' id=\"editarPrestamo"+id+"\"   value='Editar' onclick=\"adminPrestamo('"+rowObject+"','editar');\"    />"; 
-        return edit;
+        
+        var edit = "<input type='button' id=\"editarPrestamo"+id+"\" value='Editar' onclick=\"adminPrestamo('"+rowObject+"','editar');\" />"; 
+        var cerrarPrestamo = "<input type='button' id=\"cerrarPrestamo"+id+"\" value='Cerrar' onclick=\"cerrarPrestamo('"+rowObject+"');\" />"; 
+        return edit+cerrarPrestamo;
     }
 	
 	function agregarPrestamo () {            
@@ -288,5 +290,55 @@ function actualizarFechaDetallePrestamo(idDetalle){
         }
     });
     
+}
+
+
+function cerrarPrestamo(obj){
+     var myOptions = obj.split(',');
+     var idPrestamo = myOptions[0];
+    
+   $.ajax({
+        url :'controllers/PrestamosController.php?op=6&id='+idPrestamo ,
+        type : "post",
+        complete:function (jqXHR,status) {
+          $("#jqgDetallePrestamo").trigger("reloadGrid");
+        },
+        error:function (error) {
+            $("#dlgPrestamo").dialog("close");
+            $("<div class='edit_modal'>Ha ocurrido un error!</div>").dialog({
+                resizable:false,
+                title:'Error!.',
+                height:200,
+                width:450,
+                modal:true
+            });
+        }
+    });
+  
+}
+
+function actualizarEstadoLibro(obj){
+     var myOptions = obj.split(',');
+     var idLibro = myOptions[3];
+     var idDetallePrestamo = myOptions[0];
+    
+    $.ajax({
+        url :'controllers/PrestamosController.php?op=3&id='+idLibro ,
+        type : "post",
+        complete:function (jqXHR,status) {
+          $("#jqgDetallePrestamo").trigger("reloadGrid");
+          actualizarFechaDetallePrestamo(idDetallePrestamo);
+        },
+        error:function (error) {
+            $("#dlgPrestamo").dialog("close");
+            $("<div class='edit_modal'>Ha ocurrido un error!</div>").dialog({
+                resizable:false,
+                title:'Error!.',
+                height:200,
+                width:450,
+                modal:true
+            });
+        }
+    });
 }
 

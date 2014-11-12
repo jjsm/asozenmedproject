@@ -53,7 +53,7 @@ class Libros
     
     public function borrar_libro($valores){
     	$oConectar = new consultarDB;
-    	$sql='DELETE FROM tblLibros WHERE id_libro= ?';
+    	$sql='DELETE FROM tblLibros WHERE id_libro ?';
     	$oConectar->ejecutarSentencia($valores,$sql);
     }
     
@@ -70,9 +70,9 @@ class Libros
     	return $result;
     }
     
-    public function actualizarEstadoLibro($valores){
+    public function actualizarEstadoLibro($estado,$valores){
         $oConectar = new consultarDB;
-    	$sql='UPDATE tblLibros SET estado = ?   WHERE id_libro= ?';
+    	$sql='UPDATE tblLibros SET estado ='.$estado.' WHERE id_libro IN (?)';
     	$oConectar->ejecutarSentencia($valores,$sql);
     }
 }
