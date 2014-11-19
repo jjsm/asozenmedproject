@@ -60,9 +60,11 @@ function insertarPrestamo($prestamos){
     $libros = Libros::singleton();
 	//Valida antes si el encabezado ya no fue creado cuando se inserta un libro por primera vez 
 	if(empty($idPrestamo)){
+        echo "Prestamo Creado con ID ".$idPrestamo;
 		$valores = array($f_prestamo,$f_entrega,$practicante,$prestado);
 		$idPrestamo =$prestamos->insertarEncabezadoPrestamo($valores);
 	}
+  
     //Si existe libro y prestamo se agrega al detalle
 	if(!empty($idPrestamo) && !empty($idLibro)){
 		$valores2=array($idLibro,$idPrestamo);
@@ -77,7 +79,7 @@ function insertarPrestamo($prestamos){
 }
 
 function listarDetallePrestamo($prestamos,$detalle){
-	$post=array(
+  $post=array(
 			'limit'=>(isset($_REQUEST['rows']))?$_REQUEST['rows']:'',// Almacena el numero de filas que se van a mostrar por pagina
 			'page'=>(isset($_REQUEST['page']))?$_REQUEST['page']:'',// Almacena el numero de pagina actual
 			'orderby'=>(isset($_REQUEST['sidx']))?$_REQUEST['sidx']:'',// Almacena el indice por el cual se hará la ordenación de los datos
@@ -124,7 +126,7 @@ function cerrarPrestamo($prestamos){
     $valores = array($idPrestamo);
     //Cambia  fecha de  entrega del libro y estado del detalle
     $prestamos->cerrarPrestamo($valores);
-    //cambia el estado del prestamo
+    //cambia el estado del prestamo y fecha de entregado
     $prestamos->actEstadoPrestamo($valores);
     //consulta lo libros que no han sido entregados
     $result = $prestamos->consultarLibrosPrestamo($valores);

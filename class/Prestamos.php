@@ -28,7 +28,8 @@ class Prestamos
 						 DATE_FORMAT(prestamos.fechaEntrega, '%d-%m-%Y')  AS entrega,
     					 prestador.usuario AS prestador,
     					 prestador.id_usuario AS idPrestador,
-						 DATE_FORMAT(prestamos.fechaRegistro, '%d-%m-%Y')  AS devuelto
+						 DATE_FORMAT(prestamos.fechaRegistro, '%d-%m-%Y')  AS devuelto,
+                         prestamos.estadoPres AS estado
     			
 				FROM 	tblPrestamos prestamos 
 					INNER JOIN tblusuarios usuario ON prestamos.idUsuarios = usuario.id_usuario  
@@ -40,7 +41,7 @@ class Prestamos
     	$i = 0;
     	foreach ($resultados[0] as $row) {
     		$result[$i]['id']=$row["id"];
-    		$result[$i]['cell']=array($row["id"],$row["practicante"],$row["idPracticante"],$row["prestamo"],$row["entrega"],$row["prestador"],$row["idPrestador"],$row["devuelto"]);
+    		$result[$i]['cell']=array($row["id"],$row["practicante"],$row["idPracticante"],$row["prestamo"],$row["entrega"],$row["prestador"],$row["idPrestador"],$row["devuelto"],$row["estado"]);
     		$i++;
     	}
     	//Asignamos todo esto en variables de json, para enviarlo al navegador.
@@ -59,7 +60,7 @@ class Prestamos
     public function insertarLibroPrestamo($valores)
     {	
     	$oConectar = new consultarDB;
-    	$sql='INSERT INTO tblDetallePrestamo VALUES (null,null,?,?,1)';
+    	$sql='INSERT INTO tblDetallePrestamo VALUES (null,null,?,?,0)';
     	$id =$oConectar->ejecutarSentencia($valores,$sql);
     	return $id;
     }
@@ -136,7 +137,7 @@ class Prestamos
     
     public function  actEstadoPrestamo($valores){
      $oConectar = new consultarDB;
-     $sql = 'UPDATE tblPrestamos SET estadoPres=0 WHERE id_prestamo=? '  ;
+     $sql = 'UPDATE tblPrestamos SET estadoPres=0,fechaRegistro=Now() WHERE id_prestamo=? '  ;
      $oConectar->ejecutarSentencia($valores,$sql);
     }
  

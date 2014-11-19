@@ -6,7 +6,7 @@ $(document).ready(function () {
 		mtype: 'POST',
 		height: 190,
 		width: 930, 
-		colNames:['id','practicante','','prestamo','entrega','prestador','','devuelto','action'], 
+		colNames:['id','practicante','','prestamo','entrega','prestador','','devuelto','estado','action'], 
 		colModel:[ 
 		          {name:'id',index:'id', width:55,hidden:true}, 
 		          {name:'practicante',index:'practicante',  width: 80}, 
@@ -16,8 +16,15 @@ $(document).ready(function () {
 		          {name:'prestador',index:'prestador', width:90},
 		          {name:'idPrestador',index:'idPrestador', width:90,hidden:true},
 		          {name:'devuelto',index:'devuelto', width:90},
+                  {name:'estado',index:'estado', width:90,hidden:true},
 		          {name:'action',index:'action',sortable:false, formatter: displayButtons},
 		          ], 
+                  afterInsertRow : function(rowid, rowdata)
+                   {
+                         if (rowdata.estado == "0"){
+                               $("#cerrarPrestamo"+rowid).hide();
+                          }
+                   },
 		 pager: '#pager-prestamo', 
 		 rowNum:10, 
 		 rowList:[100,200,300], 
@@ -40,7 +47,8 @@ $(document).ready(function () {
 	
 	
 	function displayButtons(cellvalue, options, rowObject)
-    {	var id = rowObject[0];
+    {	
+        var id = rowObject[0];
         
         var edit = "<input type='button' id=\"editarPrestamo"+id+"\" value='Editar' onclick=\"adminPrestamo('"+rowObject+"','editar');\" />"; 
         var cerrarPrestamo = "<input type='button' id=\"cerrarPrestamo"+id+"\" value='Cerrar' onclick=\"cerrarPrestamo('"+rowObject+"');\" />"; 
@@ -86,10 +94,12 @@ function adminPrestamo(opt,option){
             width:450,
             modal:true,
             open:function(){
+                
             	$("#id-prestamo").val("");
             	$(".clean").val("");
                 cargarGridDetallePrestamo(id);
-    			$("#frmPrestamo").validate({  
+    			//validador
+                $("#frmPrestamo").validate({  
     				  
     				rules: {  
     					prestamo:  {required: true},  
@@ -117,7 +127,7 @@ function adminPrestamo(opt,option){
     				}  
     			});
 				
-
+                    //grid detalle
 						jQuery("#jqgDetallePrestamo").jqGrid({ 
 							url:'controllers/PrestamosController.php?op=2&id='+id, 
 							datatype: "json",
@@ -176,15 +186,16 @@ function adminPrestamo(opt,option){
 								 $("#id-libro").val(data.item.id);
 								 }});
 					 //peticion ajax al insertar libro
-					 $("#btnInsertarLibro").on("click",function(){
-						
+					 $("#btnInsertarLibro").off("click.libro").on("click.libro",function(){
+                         
 						 if ($("#frmPrestamo").validate().form() == true){
 								 $.ajax({
 									url :'controllers/PrestamosController.php?op=1' ,
 									type : $('#frmPrestamo').attr("method"),
 									data : $('#frmPrestamo').serialize(),
 									complete:function (jqXHR,status) {
-										$("#id-prestamo").val(jqXHR.responseText);
+										
+                                        $("#id-prestamo").val(jqXHR.responseText);
 										cargarGridDetallePrestamo(jqXHR.responseText);	
                                         $("#txtLibro").val("");
                                         $("#txtLibro").focus();	
@@ -201,6 +212,7 @@ function adminPrestamo(opt,option){
 									}
 								});
 						 }
+                         
 						 
 					 })
             },
@@ -228,10 +240,11 @@ function adminPrestamo(opt,option){
                 }
             }
         });
+    
+    
 }
 
 	function cargarGridDetallePrestamo(idDetalle){
-
 		var url = 'controllers/PrestamosController.php?op=2&id='+idDetalle;
 		$("#jqgDetallePrestamo").jqGrid('setGridParam', { url: url });
 		$("#jqgDetallePrestamo").trigger("reloadGrid");					
@@ -244,8 +257,8 @@ function adminPrestamo(opt,option){
         return edit;
     }
 
-function actualizarEstadoLibro(obj){
-     var myOptions = obj.split(',');
+function actualizarEstadoLibro(event,obj){
+    var myOptions = obj.split(',');
      var idLibro = myOptions[3];
      var idDetallePrestamo = myOptions[0];
     

@@ -4,13 +4,12 @@ asozenmedproject
 ###Por hacer
 
 - Cuadrar el paginador del jqgrid
-- Al crear libro ingresar el estado 1 (activo)
-- un boton en la lista de prestamos para cerrar el prestamo solo si todos los libros estan en 1
-- bloquear usuarios con mas de tres libros prestados
+- bloquear usuarios con mas de tres libros prestados o desees prestar mas de tres libros
 - al editar fecha guardar en ok
 - restringir libros en 0
 - hacer filtro en prestamo con prestamos cerrados o abiertos
-- revisar porq se abren ventanas de prestamos sin datos cuando se editan
+- al crear libro o usuario o prestamo dejarlo en la pagina y solo actualizar el grid
+- al editar prestamo o cerrar prestamo actualizar el grid
 
 
 tabla estado --->parcial/ completo,aplazado, pasofecha

@@ -40,7 +40,7 @@ class Libros
     public function insertar_libro($valores)
     {		
     	$oConectar = new consultarDB;
-    	$sql='INSERT INTO tblLibros (titulo,codigo,descripcion,editorial,año,observaciones,autores)VALUES (?,?,?,?,?,?,?)';
+    	$sql='INSERT INTO tblLibros (titulo,codigo,descripcion,editorial,año,observaciones,estado,autores)VALUES (?,?,?,?,?,?,1,?)';
     	$oConectar->ejecutarSentencia($valores,$sql);
     }
     

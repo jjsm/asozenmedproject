@@ -68,7 +68,7 @@ class consultarDB extends configuracion //clase principal de conexion y consulta
     	if( !empty($post['orden']) && !empty($post['orderby']))
     		//Añadimos de una ves la parte de la consulta para ordenar el resultado
     		$sql1 .= " ORDER BY $post[orderby] $post[orden] ";
-    	if($post['limit'] && $post['offset']) $sql.=" limit $post[offset], $post[limit]";
+    	if($post['limit'] && $post['offset']) $sql1.=" limit $post[offset], $post[limit]";
     	//añadimos el limite para solamente sacar las filas de la apgina actual que el sistema esta consultando
     	else if($post['limit']) $sql1 .=" limit 0,$post[limit]";
     	
