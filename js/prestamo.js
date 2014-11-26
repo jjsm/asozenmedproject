@@ -4,7 +4,7 @@ $(document).ready(function () {
 		url:'controllers/PrestamosController.php?op=0', 
 		datatype: "json",
 		mtype: 'POST',
-		height: 190,
+		height: '100%',
 		width: 930, 
 		colNames:['id','practicante','','prestamo','entrega','prestador','','devuelto','estado','action'], 
 		colModel:[ 
@@ -20,19 +20,23 @@ $(document).ready(function () {
 		          {name:'action',index:'action',sortable:false, formatter: displayButtons},
 		          ], 
                   afterInsertRow : function(rowid, rowdata)
-                   {
+                   {   
                          if (rowdata.estado == "0"){
                                $("#cerrarPrestamo"+rowid).hide();
                           }
-                   },
+                       },
+                 loadComplete: function() {
+            debugger;
+                  $('#jqg-prestamo').setGridParam({datatype:'json'}).trigger('reloadGrid',[{current:true}]);
+                  },
 		 pager: '#pager-prestamo', 
-		 rowNum:10, 
+		 rowNum:30, 
 		 rowList:[100,200,300], 
 		 sortname: 'id', 
 		 sortorder: "asc",
+         loadonce: true,//sirve para paginacion
 		 viewrecords: true, 
-		 caption: 'PRESTAMOS',
-		 toppager: true
+		 caption: 'PRESTAMOS'
 		  })
 		  .navGrid('#pager-prestamo',{edit:false,add:false,del:false,search:false})
 		  //Boton Agregar
@@ -41,17 +45,22 @@ $(document).ready(function () {
 		   buttonicon:"ui-icon-add", 
 		   onClickButton: function(){ 
 			   agregarPrestamo();
-		   }, 
-		   position:"last"
+           }
 		});
 	
 	
 	function displayButtons(cellvalue, options, rowObject)
     {	
         var id = rowObject[0];
-        
-        var edit = "<input type='button' id=\"editarPrestamo"+id+"\" value='Editar' onclick=\"adminPrestamo('"+rowObject+"','editar');\" />"; 
-        var cerrarPrestamo = "<input type='button' id=\"cerrarPrestamo"+id+"\" value='Cerrar' onclick=\"cerrarPrestamo('"+rowObject+"');\" />"; 
+        var practicante = rowObject[1];
+	    var id_practicante = rowObject[2];
+	    var prestamo = rowObject[3];
+	    var entrega = rowObject[4];
+	    var prestador= rowObject[5];
+	    var id_prestador= rowObject[6];
+       
+        var edit = "<input type='button' id=\"editarPrestamo"+id+"\" value='Editar' onclick=\"adminPrestamo('"+id+"','"+practicante+"','"+id_practicante+"','"+prestamo+"','"+entrega+"','"+prestador+"','"+id_prestador+"','editar');\" />"; 
+        var cerrarPrestamo = "<input type='button' id=\"cerrarPrestamo"+id+"\" value='Cerrar' onclick=\"cerrarPrestamo('"+id+"');\" />"; 
         return edit+cerrarPrestamo;
     }
 	
@@ -66,25 +75,14 @@ $(document).ready(function () {
 });
 
 
-function adminPrestamo(opt,option){
+function adminPrestamo(id,practicante,id_practicante,prestamo,entrega,prestador,id_prestador,option){
     var url="";
-    var id = "";
     
     var fullDate = new Date();
     var twoDigitMonth = (fullDate.getMonth()+1)+"";if(twoDigitMonth.length==1)  twoDigitMonth="0" +twoDigitMonth;
     var twoDigitDate = fullDate.getDate()+"";if(twoDigitDate.length==1) twoDigitDate="0" +twoDigitDate;
     var currentDate = twoDigitDate + "-" + twoDigitMonth + "-" + fullDate.getFullYear();
     
-	if(option == "editar"){
-		var myOptions = opt.split(',');
-	    id = myOptions[0];
-	    var practicante = myOptions[1];
-	    var id_practicante = myOptions[2];
-	    var prestamo = myOptions[3];
-	    var entrega = myOptions[4];
-	    var prestador= myOptions[5];
-	    var id_prestador= myOptions[6];
-	}
 
  // Dialogo
     $("#dlgPrestamo").dialog({
@@ -306,15 +304,13 @@ function actualizarFechaDetallePrestamo(idDetalle){
 }
 
 
-function cerrarPrestamo(obj){
-     var myOptions = obj.split(',');
-     var idPrestamo = myOptions[0];
-    
+function cerrarPrestamo(idPrestamo){
    $.ajax({
         url :'controllers/PrestamosController.php?op=6&id='+idPrestamo ,
         type : "post",
         complete:function (jqXHR,status) {
-          $("#jqgDetallePrestamo").trigger("reloadGrid");
+          $("#jqg-prestamo").trigger("reloadGrid");
+            
         },
         error:function (error) {
             $("#dlgPrestamo").dialog("close");

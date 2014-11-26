@@ -12,10 +12,11 @@ $(document).ready(function () {
 		          {name:'cedula',index:'cedula',  width: 80}, 
 		          {name:'usuario',index:'usuario',  width: 80}, 
 		          {name:'correo',index:'correo', width:90},
-		          {name:'celular',index:'celular', width:90},
-		          {name:'telefono',index:'telefono', width:90},
-		          {name:'action',index:'action',sortable:false, formatter: displayButtons},
-		          ], 
+		     		          ], 
+         loadComplete: function() {
+            debugger;
+                  $('#jqgUsuario').setGridParam({datatype:'json'}).trigger('reloadGrid',[{current:true}]);
+          },		          ], 
 		 pager: '#pagerusuario', 
 		 rowNum:10, 
 		 rowList:[10,20,30], 
@@ -23,6 +24,7 @@ $(document).ready(function () {
 		 sortorder: "asc",
 		 viewrecords: true, 
 		 caption: 'USUARIOS',
+         loadonce: true,
 		 toppager: true
 		  })
 		  .navGrid('#pagerusuario',{edit:false,add:false,del:false,search:false})
@@ -40,8 +42,14 @@ $(document).ready(function () {
 	
 	function displayButtons(cellvalue, options, rowObject)
     {	var id = rowObject[0];
-        var edit = "<input  type='button' id=\"editarUsuario"+id+"\"  value='Editar' onclick=\"adminUsuario('"+rowObject+"','editar');\"    />",  
-             restore = "<input type='button' id=\"editarUsuario"+id+"\"  value='Eliminar' onclick=\"adminUsuario('"+rowObject+"','eliminar');\" />";
+	    var cedula =  rowObject[1];
+	    var usuario =  rowObject[2];
+	    var correo =  rowObject[3];
+	    var celular =  rowObject[4];
+	    var telefono =  rowObject[5];
+     
+        var edit = "<input  type='button' id=\"editarUsuario"+id+"\"  value='Editar' onclick=\"adminUsuario('"+id+"','"+ cedula+"','"+usuario+"','"+correo+"','"+celular+"','"+telefono+"', 'editar');\"    />",  
+             restore = "<input type='button' id=\"editarUsuario"+id+"\"  value='Eliminar' onclick=\"adminUsuario('"+id+"','"+ cedula+"','"+usuario+"','"+correo+"','"+celular+"','"+telefono+"','eliminar');\" />";
         return edit+restore;
     }
 	function agregarUsuario () { 
@@ -63,26 +71,15 @@ $(document).ready(function () {
 });
 
 
-function adminUsuario(opt,option){
+function adminUsuario(id,cedula,usuario,correo,celular,telefono,option){
 	 $("#frmUsuarioCancel").hide();
 	 $("#frmUsuario").show();
 	//agregar
 	var url = 'controllers/UsuariosController.php?op=1';
-
 	if(option == 'editar'){
 		url = 'controllers/UsuariosController.php?op=2';
-		var myOptions = opt.split(',');
-	    var id = myOptions[0];
-	    var cedula = myOptions[1];
-	    var usuario = myOptions[2];
-	    var correo = myOptions[3];
-	    var celular = myOptions[4];
-	    var telefono = myOptions[5];
 	}else if(option == 'eliminar'){
 		url = 'controllers/UsuariosController.php?op=3';
-		var myOptions = opt.split(',');
-		var id = myOptions[0];
-	    var usuario = myOptions[2];
 	}
 		
         $("#dlgUsuario").dialog({
@@ -129,8 +126,7 @@ function adminUsuario(opt,option){
 					}
 				}  
 			});
-			
-				
+							
         	$("#id").val(id);
         	$("#cedula").val(cedula);
         	$("#name-user").val(usuario);

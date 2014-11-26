@@ -18,6 +18,11 @@ $(document).ready(function () {
 		          {name:'estado',index:'telefono', width:90},
 		          {name:'action',index:'action',sortable:false, formatter: displayButtons},
 		          ], 
+         		          ], 
+         loadComplete: function() {
+            
+                  $('#jqgLibro').setGridParam({datatype:'json'}).trigger('reloadGrid',[{current:true}]);
+          },
 		 pager: '#pagerlibro', 
 		 rowNum:10, 
 		 rowList:[10,20,30], 
@@ -25,6 +30,7 @@ $(document).ready(function () {
 		 sortorder: "asc",
 		 viewrecords: true, 
 		 caption: 'LIBROS',
+         loadonce: true,
 		 toppager: true
 		  })
 		  .navGrid('#pagerlibro',{edit:false,add:false,del:false,search:false})

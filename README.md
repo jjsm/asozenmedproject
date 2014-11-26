@@ -3,9 +3,7 @@ asozenmedproject
 
 ###Por hacer
 
-- Cuadrar el paginador del jqgrid
 - bloquear usuarios con mas de tres libros prestados o desees prestar mas de tres libros
-- al editar fecha guardar en ok
 - restringir libros en 0
 - hacer filtro en prestamo con prestamos cerrados o abiertos
 - al crear libro o usuario o prestamo dejarlo en la pagina y solo actualizar el grid

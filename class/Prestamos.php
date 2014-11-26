@@ -45,7 +45,8 @@ class Prestamos
     		$i++;
     	}
     	//Asignamos todo esto en variables de json, para enviarlo al navegador.
-    	$arr = array('rows' =>$result, 'total' => $resultados[1], 'page' => $resultados[2], 'records' => $resultados[3]);
+    	$arr = array('rows' =>$resultados[0], 'total' => $resultados[1], 'page' => $resultados[2], 'records' => $resultados[3]);
+        
     	return $arr;
     }
     
