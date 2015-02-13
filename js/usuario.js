@@ -12,11 +12,14 @@ $(document).ready(function () {
 		          {name:'cedula',index:'cedula',  width: 80}, 
 		          {name:'usuario',index:'usuario',  width: 80}, 
 		          {name:'correo',index:'correo', width:90},
-		     		          ], 
+                  {name:'celular',index:'celular', width:90},
+                  {name:'telefono',index:'telefono', width:90},
+                  {name:'action',index:'action',sortable:false, formatter: displayButtons},
+		     	], 
          loadComplete: function() {
             debugger;
                   $('#jqgUsuario').setGridParam({datatype:'json'}).trigger('reloadGrid',[{current:true}]);
-          },		          ], 
+          },		          
 		 pager: '#pagerusuario', 
 		 rowNum:10, 
 		 rowList:[10,20,30], 

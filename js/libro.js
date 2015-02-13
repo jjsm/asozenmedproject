@@ -18,7 +18,7 @@ $(document).ready(function () {
 		          {name:'estado',index:'telefono', width:90},
 		          {name:'action',index:'action',sortable:false, formatter: displayButtons},
 		          ], 
-         		          ], 
+         		       
          loadComplete: function() {
             
                   $('#jqgLibro').setGridParam({datatype:'json'}).trigger('reloadGrid',[{current:true}]);
