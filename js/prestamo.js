@@ -169,20 +169,21 @@ function adminPrestamo(id,practicante,id_practicante,prestamo,entrega,prestador,
 							$("#id-prestado").val(id_prestador);            	
 							
 						}
-					 $("#txtPracticante").autocomplete({source:"controllers/buscar_usuario_ac.php",minLength: 1,select: function(event, data) {
+					 $("#txtPracticante").autocomplete({source:"controllers/UsuariosController.php?op=4",minLength: 1,select: function(event, data) {
 								 $("#txtPracticante").val(data.item.value);
 								 $("#id-practicante").val(data.item.id);
 					  }});
 					 
-					 $("#txtPrestado").autocomplete({source:"controllers/buscar_usuario_ac.php",minLength: 1,select: function(event, data) {
+					 $("#txtPrestado").autocomplete({source:"controllers/UsuariosController.php?op=4",minLength: 1,select: function(event, data) {
 								 $("#txtPrestado").val(data.item.value);
 								 $("#id-prestado").val(data.item.id);
 								 }});
 					 
-					 $("#txtLibro").autocomplete({source:"controllers/buscar_libro_ac.php",minLength: 1,select: function(event, data) {
+					 $("#txtLibro").autocomplete({source:"controllers/LibrosController.php?op=4",minLength: 1,select: function(event, data) {
 								 $("#txtLibro").val(data.item.value);
 								 $("#id-libro").val(data.item.id);
 								 }});
+                
 					 //peticion ajax al insertar libro
 					 $("#btnInsertarLibro").off("click.libro").on("click.libro",function(){
                          

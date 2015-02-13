@@ -1,10 +1,11 @@
 <?php
 
-require_once ("../class/consultarDB.php");
+require_once ("../class/Conexion.php");
 
 class Prestamos
 {
   private static $instancia;
+  private $oConectar = Conexion::singleton();
 
 
     public static function singleton()
@@ -17,9 +18,8 @@ class Prestamos
     }
     
 
-    public function listar_prestamo($valores)
+    public function listarPrestamo($valores)
     {
-    	$oConectar = new consultarDB;
     	$sql1 = "SELECT COUNT(*) AS count FROM tblPrestamos ";
     	$sql2 = "SELECT  prestamos.id_prestamo AS id,
     					 usuario.usuario AS practicante,
@@ -52,7 +52,6 @@ class Prestamos
     
     public function insertarEncabezadoPrestamo($valores)
     {		
-    	$oConectar = new consultarDB;
     	$sql='INSERT INTO tblPrestamos VALUES (null,?,?,null,?,?,1)';
     	$id = $oConectar->ejecutarSentencia($valores,$sql);
     	return $id;
@@ -60,14 +59,12 @@ class Prestamos
     
     public function insertarLibroPrestamo($valores)
     {	
-    	$oConectar = new consultarDB;
     	$sql='INSERT INTO tblDetallePrestamo VALUES (null,null,?,?,0)';
     	$id =$oConectar->ejecutarSentencia($valores,$sql);
     	return $id;
     }
     
     public function listarDetalleprestamo($valores,$detalle){
-    	$oConectar = new consultarDB;
     	$sql1 = "SELECT COUNT(*) AS count FROM tblDetallePrestamo ";
     	$sql2 = "SELECT  detallePrestamo.id_detallePrestamo  AS id,
 						libros.codigo as codigo,
@@ -97,33 +94,26 @@ class Prestamos
     }
     
     public function actualizar_prestamo($valores){
-    	$oConectar = new consultarDB;
     	$sql='UPDATE tblPrestamos SET fechaPrestamo = ?,fechaEntrega = ?,fechaRegistro = Now() , idUsuarios = ? , idPrestamista = ? WHERE id_prestamo = ?';
     	$oConectar->ejecutarSentencia($valores,$sql);
     }
     
     public function actualizarFechaDetalle($valores){
-        $oConectar = new consultarDB;
         $sql = 'UPDATE tblDetallePrestamo SET fechaDevuelto= Now(), estadoDetalle=1 WHERE id_detallePrestamo= ? ';
         $oConectar->ejecutarSentencia($valores,$sql);
     }
     
     public function actualizarEncabezadoPrestamo($valores){
-        
-        $oConectar = new consultarDB;
         $sql = 'UPDATE tblPrestamos SET fechaPrestamo= ?, fechaEntrega=?,fechaRegistro =null,idUsuarios = ?,idPrestamista=? WHERE id_prestamo= ? ';
         $oConectar->ejecutarSentencia($valores,$sql); 
     }
     
     public function cerrarPrestamo($valores){
-      
-      $oConectar = new consultarDB;
       $sql = 'UPDATE tblDetallePrestamo SET estadoDetalle=1, fechaDevuelto = Now() WHERE idPrestamo = ? AND  estadoDetalle!= 1 ';
       $oConectar->ejecutarSentencia($valores,$sql);  
     }
     
     public function consultarLibrosPrestamo($valores){
-        $oConectar = new consultarDB;
         $sql = 'SELECT DISTINCT  idLibros  From tblDetallePrestamo WHERE idPrestamo=? ';
         
         $resultados =$oConectar->consultar_ac($valores,$sql);
@@ -137,7 +127,6 @@ class Prestamos
     }
     
     public function  actEstadoPrestamo($valores){
-     $oConectar = new consultarDB;
      $sql = 'UPDATE tblPrestamos SET estadoPres=0,fechaRegistro=Now() WHERE id_prestamo=? '  ;
      $oConectar->ejecutarSentencia($valores,$sql);
     }

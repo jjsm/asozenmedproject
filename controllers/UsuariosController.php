@@ -18,7 +18,9 @@ switch ($_GET["op"]) {
 	case 3:
 		eliminarUsuario($usuarios);
 		break;
-
+    case 4:
+        buscarUsuariosAutoComplete($usuarios);
+        break;
 }
 
 
@@ -30,7 +32,7 @@ function listarUsuario($usuarios){
 			'orden'=>(isset($_REQUEST['sord']))?$_REQUEST['sord']:'',  // Almacena el modo de ordenación
 	);
 	
-	$resultados = $usuarios->listar_usuario($post);
+	$resultados = $usuarios->listarUsuario($post);
 	
 	echo json_encode($resultados);
 	
@@ -44,7 +46,8 @@ function insertarUsuario($usuarios){
 	$telefono = $_POST['telefono'];
 	
 	$valores = array($cedula,$usuario,$correo,$celular,$telefono);
-	$usuarios->insert_usuario($valores);	
+	
+    $usuarios->insertUsuario($valores);	
 }
 
 function editarUsuario($usuarios){
@@ -55,15 +58,26 @@ function editarUsuario($usuarios){
 	$celular = $_POST['celular'];
 	$telefono = $_POST['telefono'];
 	$valores=array($cedula,$usuario,$correo,$celular,$telefono,$id);
-	$usuarios->actualizar_usuario($valores);
+	
+    $usuarios->actualizarUsuario($valores);
 }
 
 function eliminarUsuario($usuarios){
-	
 	$id = $_POST['id'];
 	$valores=array($id);
-	$usuarios->borrar_usuario($valores);
-	
+    
+	$usuarios->borrarUsuario($valores);	
+}
+
+
+function buscarUsuariosAutoComplete($usuarios){
+    $term = $_GET['term'];
+    $valores = array("%".$term."%");
+
+    $result = $usuario->autoComplete($valores);
+ 
+    echo json_encode($result);
+     
 }
 
 

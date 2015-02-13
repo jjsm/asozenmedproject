@@ -44,7 +44,7 @@ function listarPrestamo($prestamos){
 	);
 
 	//consultamos los valores
-	$array = $prestamos->listar_prestamo($post);
+	$array = $prestamos->listarPrestamo($post);
     
 	echo json_encode($array);
 }

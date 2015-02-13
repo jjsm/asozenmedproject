@@ -18,6 +18,9 @@ switch ($_GET["op"]) {
 	case 3:
 		eliminarLibro($libros);
 		break;
+    case 4:
+		buscarLibroAutoComplete($libros);
+		break;
 
 }
 
@@ -31,7 +34,7 @@ function listarLibro($libros){
 	);
 	
 	//consultamos los valores
-	$array = $libros->listar_libro($post);
+	$array = $libros->listarLibro($post);
 	
 	echo json_encode($array);
 }
@@ -47,7 +50,7 @@ function insertarLibro($libros){
 	$autores = $_POST['autores'];
 	
 	$valores = array($titulo,$codigo,$descripcion,$editoria,$ano,$observaciones,$autores);
-	$libros->insertar_libro($valores);
+	$libros->insertarLibro($valores);
 }
 
 function editarLibro($libros){
@@ -63,15 +66,29 @@ function editarLibro($libros){
 	
 	$valores = array($titulo,$codigo,$descripcion,$editoria,$ano,$observaciones,$autores,$id);
 	
-	$libros->actualizar_libro($valores);
+	$libros->actualizarLibro($valores);
 }
 
 function eliminarLibro($libros){
 	
 	$id = $_POST['id'];
 	$valores = array($id);
-	$libros->borrar_libro($valores);
+	$libros->borrarLibro($valores);
 	
+}
+
+
+function buscarLibroAutoComplete($libros){
+    
+    $term = $_GET['term'];
+    
+    //concatena
+    $valores = array("%".$term."%");
+
+    $result = $libros->autoComplete($valores);
+
+    echo json_encode($result);
+    
 }
 
 ?>

@@ -2,7 +2,7 @@
 
 require_once ("../cfg/configuracion.php");
 
-class consultarDB extends configuracion //clase principal de conexion y consultas
+class Conexion extends configuracion //clase principal de conexion y consultas
 {
     private static $instancia;
     private $conexion;

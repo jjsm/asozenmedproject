@@ -1,12 +1,12 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-require_once ("../class/consultarDB.php");
+require_once ("../class/Conexion.php");
 
 class Libros
 {
   private static $instancia;
-
+  private $oConectar = Conexion::singleton();
 
     public static function singleton()
     {
@@ -17,9 +17,8 @@ class Libros
         return self::$instancia;
     }
     
-    public function listar_libro($valores)
+    public function listarLibro($valores)
     {
-    	$oConectar = new consultarDB;
     	$sql1 = "SELECT COUNT(*) AS count FROM tblLibros ";
 		$sql2 = "SELECT id_libro,titulo,codigo,descripcion,editorial,año,observaciones,estado,autores  FROM tblLibros ";
 		
@@ -37,28 +36,24 @@ class Libros
     	return $arr;
     }
     
-    public function insertar_libro($valores)
+    public function insertarLibro($valores)
     {		
-    	$oConectar = new consultarDB;
     	$sql='INSERT INTO tblLibros (titulo,codigo,descripcion,editorial,año,observaciones,estado,autores)VALUES (?,?,?,?,?,?,1,?)';
     	$oConectar->ejecutarSentencia($valores,$sql);
     }
     
-    public function actualizar_libro($valores){
-    	$oConectar = new consultarDB;
+    public function actualizarLibro($valores){
     	$sql='UPDATE tblLibros SET titulo = ?,codigo = ?,descripcion = ?,editorial = ?, año = ? , observaciones = ? , autores = ? WHERE id_libro = ?';
     	$oConectar->ejecutarSentencia($valores,$sql);
     }
     
     
-    public function borrar_libro($valores){
-    	$oConectar = new consultarDB;
+    public function borrarLibro($valores){
     	$sql='DELETE FROM tblLibros WHERE id_libro ?';
     	$oConectar->ejecutarSentencia($valores,$sql);
     }
     
     public function autoComplete($valores){
-    	$oConectar = new consultarDB;
     	$sql = "SELECT id_libro,titulo FROM tblLibros WHERE titulo LIKE ? ";//and estado!=0";
     	$resultados =$oConectar->consultar_ac($valores,$sql);
     	$result = array();
@@ -71,7 +66,6 @@ class Libros
     }
     
     public function actualizarEstadoLibro($estado,$valores){
-        $oConectar = new consultarDB;
     	$sql='UPDATE tblLibros SET estado ='.$estado.' WHERE id_libro IN (?)';
     	$oConectar->ejecutarSentencia($valores,$sql);
     }
