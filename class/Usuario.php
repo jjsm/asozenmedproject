@@ -7,7 +7,12 @@ require_once ("../class/Conexion.php");
 class Usuario
 {
     private static $instancia;
-    private $oConectar = Conexion::singleton();
+    private $oConectar ;
+    
+    private function __construct()
+    {
+     $this->oConectar = Conexion::singleton();
+    }
 
     public static function singleton()
     {
@@ -23,7 +28,7 @@ class Usuario
     	$sql1 = "SELECT COUNT(*) AS count FROM tblusuarios ";
 		$sql2 = "SELECT id_usuario,cedula,usuario,correo,celular,telefono FROM tblusuarios ";
     
-        $resultados = $oConectar->listarGrid($valores,$sql1,$sql2);
+        $resultados = $this->oConectar->listarGrid($valores,$sql1,$sql2);
     	
     	$result = array();
     	$i = 0;
@@ -43,23 +48,23 @@ class Usuario
     public function insertUsuario($valores)
     {		
     	$sql='INSERT INTO tblusuarios VALUES (null,?,?,?,?,?)';
-    	$oConectar->ejecutarSentencia($valores,$sql);
+    	$this->oConectar->ejecutarSentencia($valores,$sql);
     }
     
     public function actualizarUsuario($valores){
     	$sql='UPDATE tblusuarios SET cedula = ?,usuario = ?, correo =?,celular = ?,telefono = ? WHERE id_usuario= ?';
-    	$oConectar->ejecutarSentencia($valores,$sql);
+    	$this->oConectar->ejecutarSentencia($valores,$sql);
     }
     
     
     public function borrarUsuario($valores){
     	$sql='DELETE FROM tblusuarios WHERE id_usuario = ?';
-    	$oConectar->ejecutarSentencia($valores,$sql);
+    	$this->oConectar->ejecutarSentencia($valores,$sql);
     }
     
     public function autoComplete($valores){
     	$sql = "SELECT id_usuario,usuario FROM tblusuarios WHERE usuario LIKE ?";
-    	$resultados =$oConectar->consultar_ac($valores,$sql);
+    	$resultados =$this->oConectar->consultar_ac($valores,$sql);
     	$result = array();
     	$i = 0;
         

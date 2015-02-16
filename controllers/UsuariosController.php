@@ -74,7 +74,7 @@ function buscarUsuariosAutoComplete($usuarios){
     $term = $_GET['term'];
     $valores = array("%".$term."%");
 
-    $result = $usuario->autoComplete($valores);
+    $result = $usuarios->autoComplete($valores);
  
     echo json_encode($result);
      

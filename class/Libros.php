@@ -6,8 +6,13 @@ require_once ("../class/Conexion.php");
 class Libros
 {
   private static $instancia;
-  private $oConectar = Conexion::singleton();
-
+  private   $oConectar;
+    
+    private function __construct()
+    {
+     $this->oConectar = Conexion::singleton();
+    }
+    
     public static function singleton()
     {
         if (!isset(self::$instancia)) {
@@ -22,7 +27,7 @@ class Libros
     	$sql1 = "SELECT COUNT(*) AS count FROM tblLibros ";
 		$sql2 = "SELECT id_libro,titulo,codigo,descripcion,editorial,año,observaciones,estado,autores  FROM tblLibros ";
 		
-    	$resultados = $oConectar->listarGrid($valores,$sql1,$sql2);
+    	$resultados = $this->oConectar->listarGrid($valores,$sql1,$sql2);
     	
     	$result = array();
     	$i = 0;
@@ -39,23 +44,23 @@ class Libros
     public function insertarLibro($valores)
     {		
     	$sql='INSERT INTO tblLibros (titulo,codigo,descripcion,editorial,año,observaciones,estado,autores)VALUES (?,?,?,?,?,?,1,?)';
-    	$oConectar->ejecutarSentencia($valores,$sql);
+    	$this->oConectar->ejecutarSentencia($valores,$sql);
     }
     
     public function actualizarLibro($valores){
     	$sql='UPDATE tblLibros SET titulo = ?,codigo = ?,descripcion = ?,editorial = ?, año = ? , observaciones = ? , autores = ? WHERE id_libro = ?';
-    	$oConectar->ejecutarSentencia($valores,$sql);
+    	$this->oConectar->ejecutarSentencia($valores,$sql);
     }
     
     
     public function borrarLibro($valores){
-    	$sql='DELETE FROM tblLibros WHERE id_libro ?';
-    	$oConectar->ejecutarSentencia($valores,$sql);
+    	$sql='DELETE FROM tblLibros WHERE id_libro = ?';
+    	$this->oConectar->ejecutarSentencia($valores,$sql);
     }
     
     public function autoComplete($valores){
     	$sql = "SELECT id_libro,titulo FROM tblLibros WHERE titulo LIKE ? ";//and estado!=0";
-    	$resultados =$oConectar->consultar_ac($valores,$sql);
+    	$resultados =$this->oConectar->consultar_ac($valores,$sql);
     	$result = array();
     	$i = 0;
     	foreach ($resultados as $row) {
@@ -67,7 +72,7 @@ class Libros
     
     public function actualizarEstadoLibro($estado,$valores){
     	$sql='UPDATE tblLibros SET estado ='.$estado.' WHERE id_libro IN (?)';
-    	$oConectar->ejecutarSentencia($valores,$sql);
+    	$this->oConectar->ejecutarSentencia($valores,$sql);
     }
 }
 ?>

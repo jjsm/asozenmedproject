@@ -4,7 +4,7 @@ $(document).ready(function () {
 		url:'controllers/UsuariosController.php?op=0', 
 		datatype: "json",
 		mtype: 'POST',
-		height: 190,
+		height:'100%',
 		width: 930, 
 		colNames:['id','cedula','usuario','correo','celular','telefono','Acciones'], 
 		colModel:[ 
@@ -17,7 +17,6 @@ $(document).ready(function () {
                   {name:'action',index:'action',sortable:false, formatter: displayButtons},
 		     	], 
          loadComplete: function() {
-            debugger;
                   $('#jqgUsuario').setGridParam({datatype:'json'}).trigger('reloadGrid',[{current:true}]);
           },		          
 		 pager: '#pagerusuario', 
@@ -148,18 +147,8 @@ function adminUsuario(id,cedula,usuario,correo,celular,telefono,option){
 							type : $("#frmUsuario").attr("method"),
 							data : $("#frmUsuario").serialize(),
 							complete:function () {
-								$('.insert_modal').dialog("close");
-								$("<div class='insert_modal'>Operacion Exitosa</div>").dialog({
-									resizable:false,
-									title:'Usuario.',
-									height:200,
-									width:450,
-									modal:true
-								});
-								setTimeout(function() {
-									$('#jqgUsuario').trigger( 'reloadGrid' );
-									window.location.href = "index.php";
-								}, 2000);
+								$('#dlgUsuario').dialog("close");
+                                $('#jqgUsuario').setGridParam({datatype:'json'}).trigger('reloadGrid',[{current:true}]);
 								}, error:function (error) {
 								$('.insert_modal').dialog("close");
 								$("<div class='insert_modal'>Ha ocurrido un error!</div>").dialog({

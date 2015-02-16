@@ -5,8 +5,12 @@ require_once ("../class/Conexion.php");
 class Prestamos
 {
   private static $instancia;
-  private $oConectar = Conexion::singleton();
+  private $oConectar;
 
+    private function __construct()
+    {
+     $this->oConectar = Conexion::singleton();
+    }
 
     public static function singleton()
     {
@@ -35,7 +39,7 @@ class Prestamos
 					INNER JOIN tblusuarios usuario ON prestamos.idUsuarios = usuario.id_usuario  
 					INNER JOIN tblusuarios prestador ON prestamos.idPrestamista=prestador.id_usuario ";
     
-    	$resultados = $oConectar->listarGrid($valores,$sql1,$sql2);
+    	$resultados = $this->oConectar->listarGrid($valores,$sql1,$sql2);
     	 
     	$result = array();
     	$i = 0;
@@ -53,14 +57,14 @@ class Prestamos
     public function insertarEncabezadoPrestamo($valores)
     {		
     	$sql='INSERT INTO tblPrestamos VALUES (null,?,?,null,?,?,1)';
-    	$id = $oConectar->ejecutarSentencia($valores,$sql);
+    	$id = $this->oConectar->ejecutarSentencia($valores,$sql);
     	return $id;
     }
     
     public function insertarLibroPrestamo($valores)
     {	
     	$sql='INSERT INTO tblDetallePrestamo VALUES (null,null,?,?,0)';
-    	$id =$oConectar->ejecutarSentencia($valores,$sql);
+    	$id =$this->oConectar->ejecutarSentencia($valores,$sql);
     	return $id;
     }
     
@@ -79,7 +83,7 @@ class Prestamos
 					INNER JOIN tblLibros libros ON detallePrestamo.idLibros=libros.id_libro 
     			WHERE prestamos.id_prestamo =".$detalle;
     	
-    	$resultados = $oConectar->listarGrid($valores,$sql1,$sql2);
+    	$resultados = $this->oConectar->listarGrid($valores,$sql1,$sql2);
     	
     	$result = array();
     	$i = 0;
@@ -95,28 +99,28 @@ class Prestamos
     
     public function actualizar_prestamo($valores){
     	$sql='UPDATE tblPrestamos SET fechaPrestamo = ?,fechaEntrega = ?,fechaRegistro = Now() , idUsuarios = ? , idPrestamista = ? WHERE id_prestamo = ?';
-    	$oConectar->ejecutarSentencia($valores,$sql);
+    	$this->oConectar->ejecutarSentencia($valores,$sql);
     }
     
     public function actualizarFechaDetalle($valores){
         $sql = 'UPDATE tblDetallePrestamo SET fechaDevuelto= Now(), estadoDetalle=1 WHERE id_detallePrestamo= ? ';
-        $oConectar->ejecutarSentencia($valores,$sql);
+        $this->oConectar->ejecutarSentencia($valores,$sql);
     }
     
     public function actualizarEncabezadoPrestamo($valores){
         $sql = 'UPDATE tblPrestamos SET fechaPrestamo= ?, fechaEntrega=?,fechaRegistro =null,idUsuarios = ?,idPrestamista=? WHERE id_prestamo= ? ';
-        $oConectar->ejecutarSentencia($valores,$sql); 
+        $this->oConectar->ejecutarSentencia($valores,$sql); 
     }
     
     public function cerrarPrestamo($valores){
       $sql = 'UPDATE tblDetallePrestamo SET estadoDetalle=1, fechaDevuelto = Now() WHERE idPrestamo = ? AND  estadoDetalle!= 1 ';
-      $oConectar->ejecutarSentencia($valores,$sql);  
+      $this->oConectar->ejecutarSentencia($valores,$sql);  
     }
     
     public function consultarLibrosPrestamo($valores){
         $sql = 'SELECT DISTINCT  idLibros  From tblDetallePrestamo WHERE idPrestamo=? ';
         
-        $resultados =$oConectar->consultar_ac($valores,$sql);
+        $resultados =$this->oConectar->consultar_ac($valores,$sql);
     	$result = array();
         $i=0;
     	foreach ($resultados as $row) {
@@ -128,7 +132,7 @@ class Prestamos
     
     public function  actEstadoPrestamo($valores){
      $sql = 'UPDATE tblPrestamos SET estadoPres=0,fechaRegistro=Now() WHERE id_prestamo=? '  ;
-     $oConectar->ejecutarSentencia($valores,$sql);
+     $this->oConectar->ejecutarSentencia($valores,$sql);
     }
  
 }

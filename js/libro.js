@@ -4,8 +4,8 @@ $(document).ready(function () {
 		url:'controllers/LibrosController.php?op=0', 
 		datatype: "json",
 		mtype: 'POST',
-		height: 190,
-		width: 930, 
+		height: '100%',
+		width:800, 
 		colNames:['id','titulo','codigo','descripcion','editorial','año','observaciones','estado','Acciones'], 
 		colModel:[ 
 		          {name:'id',index:'id_libro', width:55,hidden:true}, 
@@ -31,6 +31,7 @@ $(document).ready(function () {
 		 viewrecords: true, 
 		 caption: 'LIBROS',
          loadonce: true,
+         shrinkToFit : false,
 		 toppager: true
 		  })
 		  .navGrid('#pagerlibro',{edit:false,add:false,del:false,search:false})
@@ -79,7 +80,7 @@ function adminLibro(opt,option){
 	    var estado = myOptions[7];
 	    var autores = myOptions[8];
 	}else if(option == 'eliminar'){
-		url = 'controllers/LibrosController.php?op=3';
+        url = 'controllers/LibrosController.php?op=3';
 		 var myOptions = opt.split(',');
 
    		 var id = myOptions[0];
@@ -140,19 +141,8 @@ function adminLibro(opt,option){
                     type : $('#frmLibro').attr("method"),
                     data : $('#frmLibro').serialize(),
                     complete:function () {
-                        $('.insert_modal').dialog("close");
-                        $("<div class='insert_modal'>Operacion Exitosa</div>").dialog({
-                            resizable:false,
-                            title:'Estado.',
-                            height:200,
-                            width:450,
-                            modal:true
-                        });
-                        setTimeout(function() {
-                        	$('#jqgLibro').trigger( 'reloadGrid' );
-                        	 window.location.href = "index.php";
-                            
-                        }, 2000);
+                        $('#dlgLibro').dialog("close");
+                         $('#jqgLibro').setGridParam({datatype:'json'}).trigger('reloadGrid',[{current:true}]);
                     }, error:function (error) {
                         $('.insert_modal').dialog("close");
                         $("<div class='insert_modal'>Ha ocurrido un error!</div>").dialog({
