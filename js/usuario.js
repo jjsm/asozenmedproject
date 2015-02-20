@@ -1,7 +1,8 @@
 $(document).ready(function () {
 	
 	jQuery("#jqgUsuario").jqGrid({ 
-		url:'controllers/UsuariosController.php?op=0', 
+		// url:'controllers/UsuariosController.php?op=0', 
+		url:'controllers/ensayogrid.php',
 		datatype: "json",
 		mtype: 'POST',
 		height:'100%',
@@ -9,16 +10,25 @@ $(document).ready(function () {
 		colNames:['id','cedula','usuario','correo','celular','telefono','Acciones'], 
 		colModel:[ 
 		          {name:'id',index:'id_usuario', width:55,hidden:true}, 
-		          {name:'cedula',index:'cedula',  width: 80}, 
-		          {name:'usuario',index:'usuario',  width: 80}, 
-		          {name:'correo',index:'correo', width:90},
-                  {name:'celular',index:'celular', width:90},
-                  {name:'telefono',index:'telefono', width:90},
+		          {name:'cedula',index:'cedula',  width: 80, editable:true}, 
+		          {name:'usuario',index:'usuario',  width: 80, editable:true}, 
+		          {name:'correo',index:'correo', width:90, editable:true},
+                  {name:'celular',index:'celular', width:90, editable:true},
+                  {name:'telefono',index:'telefono', width:90, editable:true},
                   {name:'action',index:'action',sortable:false, formatter: displayButtons},
 		     	], 
          loadComplete: function() {
                   $('#jqgUsuario').setGridParam({datatype:'json'}).trigger('reloadGrid',[{current:true}]);
-          },		          
+ 
+          },
+         onSelectRow: function(rowid, status, e) {
+                var $div = $(e.target).closest(".ui-pg-div");
+                if ($div.hasClass("ui-inline-del") && $div.attr("id") === "jDeleteButton_" + rowid) {
+                    alert("Delete button was clicked");
+                }// else if ($div.hasClass("ui-inline-edit") && $div.attr("id") === "jEditButton_" + rowid) {
+                //    alert("Edit button was clicked");
+                //}
+         },
 		 pager: '#pagerusuario', 
 		 rowNum:10, 
 		 rowList:[10,20,30], 
@@ -31,11 +41,7 @@ $(document).ready(function () {
 		  })
 		  .navGrid('#pagerusuario',{edit:false,add:false,del:false,search:false})
 		  //Boton Agregar
-		  .navButtonAdd('#pagerusuario',{
-		   caption:"Add", 
-		   buttonicon:"ui-icon-add", 
-		   onClickButton: function(){ 
-			   agregarUsuario();
+		  .navButtonAdd('#pagerusuario',{caption:"Add", buttonicon:"ui-icon-add", onClickButton: function(){ agregarUsuario();
 		   }, 
 		   position:"last"
 		});
@@ -43,13 +49,14 @@ $(document).ready(function () {
 
 	
 	function displayButtons(cellvalue, options, rowObject)
-    {	var id = rowObject[0];
+    {
+
+        var id = rowObject[0];
 	    var cedula =  rowObject[1];
 	    var usuario =  rowObject[2];
 	    var correo =  rowObject[3];
 	    var celular =  rowObject[4];
 	    var telefono =  rowObject[5];
-     
         var edit = "<input  type='button' id=\"editarUsuario"+id+"\"  value='Editar' onclick=\"adminUsuario('"+id+"','"+ cedula+"','"+usuario+"','"+correo+"','"+celular+"','"+telefono+"', 'editar');\"    />",  
              restore = "<input type='button' id=\"editarUsuario"+id+"\"  value='Eliminar' onclick=\"adminUsuario('"+id+"','"+ cedula+"','"+usuario+"','"+correo+"','"+celular+"','"+telefono+"','eliminar');\" />";
         return edit+restore;
@@ -149,20 +156,13 @@ function adminUsuario(id,cedula,usuario,correo,celular,telefono,option){
 							complete:function () {
 								$('#dlgUsuario').dialog("close");
                                 $('#jqgUsuario').setGridParam({datatype:'json'}).trigger('reloadGrid',[{current:true}]);
-								}, error:function (error) {
+							 }, error:function (error) {
 								$('.insert_modal').dialog("close");
-								$("<div class='insert_modal'>Ha ocurrido un error!</div>").dialog({
-									resizable:false,
-									title:'Error!.',
-									height:200,
-									width:450,
-									modal:true
-								});
+								$("<div class='insert_modal'>Ha ocurrido un error!</div>").dialog({resizable:false,title:'Error!.',height:200,width:450,modal:true});
 							}
 						});
 					
 					}
-				//});
 				
 
             },

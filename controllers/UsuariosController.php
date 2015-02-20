@@ -65,7 +65,7 @@ function editarUsuario($usuarios){
 function eliminarUsuario($usuarios){
 	$id = $_POST['id'];
 	$valores=array($id);
-    
+    echo "Id Usuario".$id;
 	$usuarios->borrarUsuario($valores);	
 }
 

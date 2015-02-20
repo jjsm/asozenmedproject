@@ -9,8 +9,8 @@ class Conexion extends configuracion //clase principal de conexion y consultas
 
     public function __construct()
     {
-            $this->conexion = parent::conectar(); //creo una variable con la conexión configuracion.php
-            return $this->conexion;
+       $this->conexion = parent::conectar(); //creo una variable con la conexión configuracion.php
+       return $this->conexion;
     }
 
     public static function singleton()
