@@ -31,7 +31,7 @@ function listarUsuario($usuarios){
 			'orderby'=>(isset($_REQUEST['sidx']))?$_REQUEST['sidx']:'',// Almacena el indice por el cual se hará la ordenación de los datos
 			'orden'=>(isset($_REQUEST['sord']))?$_REQUEST['sord']:'',  // Almacena el modo de ordenación
 	);
-	
+	echo "Hola";
 	$resultados = $usuarios->listarUsuario($post);
 	
 	echo json_encode($resultados);
@@ -52,13 +52,14 @@ function insertarUsuario($usuarios){
 
 function editarUsuario($usuarios){
 	$id = $_POST['id'];
+    echo "prueba2".$_POST['id'];
 	$cedula = $_POST['cedula'];
 	$usuario = $_POST['usuario'];
 	$correo = $_POST['correo'];
 	$celular = $_POST['celular'];
 	$telefono = $_POST['telefono'];
 	$valores=array($cedula,$usuario,$correo,$celular,$telefono,$id);
-	
+	echo "ID ". $id ."CEDULA " .$cedula . "USUARIOA ". $usuario ."CORREO " . "CORREO " . $correo.  "CELULAR ".$celular . "TELEFONO ".$telefono;
     $usuarios->actualizarUsuario($valores);
 }
 

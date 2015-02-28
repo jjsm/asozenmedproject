@@ -33,15 +33,20 @@ class Usuario
     	$result = array();
     	$i = 0;
     	
-        foreach ($resultados[0] as $row) {
-    		$result[$i]['id']=$row["id_usuario"];
-    		$result[$i]['cell']=array($row["id_usuario"],$row["cedula"],$row["usuario"],$row["correo"],$row["celular"],$row["telefono"]);
-    		$i++;
+        foreach ($resultados[2] as $row) {
+    		//$result[$i]['id']=$row["id_usuario"];
+    		$result=array($row["id_usuario"],$row["cedula"],$row["usuario"],$row["correo"],$row["celular"],$row["telefono"]);
+
     	}
         
     	//Asignamos todo esto en variables de json, para enviarlo al navegador.
-    	$arr = array('rows' =>$result, 'total' => $resultados[1], 'page' => $resultados[2], 'records' => $resultados[3]);
-    	// close the database connection
+    	//$arr = array('rows' =>$result, 'total' => $resultados[1], 'page' => $resultados[2], 'records' => $resultados[3]);    	
+    	
+        
+      $arr = array('current' =>$resultados[0], 'rowCount' =>$resultados[1] , 'rows' =>$result , 'total' =>$resultados[3] );
+    //{"current": 1,"rowCount": 10,"rows": [{"id": 19,"sender": "123@test.de","received": "2014-05-30T22:15:00"}],"total": 1123}
+        
+        
     	return $arr;
     }
     

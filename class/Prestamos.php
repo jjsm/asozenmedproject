@@ -25,7 +25,7 @@ class Prestamos
     public function listarPrestamo($valores)
     {
     	$sql1 = "SELECT COUNT(*) AS count FROM tblPrestamos ";
-    	$sql2 = "SELECT  prestamos.id_prestamo AS id,
+    	$sql2 = "SELECT  prestamos.id_prestamo AS idPrestamo,
     					 usuario.usuario AS practicante,
     					 usuario.id_usuario AS idPracticante,
     					 DATE_FORMAT(prestamos.fechaPrestamo, '%d-%m-%Y')  AS prestamo,

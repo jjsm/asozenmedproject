@@ -1,76 +1,22 @@
 $(document).ready(function () {
-	
-	jQuery("#jqg-prestamo").jqGrid({ 
-		url:'controllers/PrestamosController.php?op=0', 
-		datatype: "json",
-		mtype: 'POST',
-		height: '100%',
-		width: 930, 
-		colNames:['id','practicante','','prestamo','entrega','prestador','','devuelto','estado','action'], 
-		colModel:[ 
-		          {name:'id',index:'id', width:55,hidden:true}, 
-		          {name:'practicante',index:'practicante',  width: 80}, 
-		          {name:'idPracticante',index:'idPracticante',  width: 80,hidden:true},
-		          {name:'prestamo',index:'prestamo', width:90},
-		          {name:'entrega',index:'entrega', width:90},
-		          {name:'prestador',index:'prestador', width:90},
-		          {name:'idPrestador',index:'idPrestador', width:90,hidden:true},
-		          {name:'devuelto',index:'devuelto', width:90},
-                  {name:'estado',index:'estado', width:90,hidden:true},
-		          {name:'action',index:'action',sortable:false, formatter: displayButtons},
-		          ], 
-                  afterInsertRow : function(rowid, rowdata)
-                   {   
-                         if (rowdata.estado == "0"){
-                               $("#cerrarPrestamo"+rowid).hide();
-                          }
-                       },
-                 loadComplete: function() {
-            debugger;
-                  $('#jqg-prestamo').setGridParam({datatype:'json'}).trigger('reloadGrid',[{current:true}]);
-                  },
-		 pager: '#pager-prestamo', 
-		 rowNum:30, 
-		 rowList:[100,200,300], 
-		 sortname: 'id', 
-		 sortorder: "asc",
-         loadonce: true,//sirve para paginacion
-		 viewrecords: true, 
-		 caption: 'PRESTAMOS'
-		  })
-		  .navGrid('#pager-prestamo',{edit:false,add:false,del:false,search:false})
-		  //Boton Agregar
-		  .navButtonAdd('#pager-prestamo',{
-		   caption:"Add", 
-		   buttonicon:"ui-icon-add", 
-		   onClickButton: function(){ 
-			   agregarPrestamo();
-           }
-		});
-	
-	
-	function displayButtons(cellvalue, options, rowObject)
-    {	
-        var id = rowObject[0];
-        var practicante = rowObject[1];
-	    var id_practicante = rowObject[2];
-	    var prestamo = rowObject[3];
-	    var entrega = rowObject[4];
-	    var prestador= rowObject[5];
-	    var id_prestador= rowObject[6];
-       
-        var edit = "<input type='button' id=\"editarPrestamo"+id+"\" value='Editar' onclick=\"adminPrestamo('"+id+"','"+practicante+"','"+id_practicante+"','"+prestamo+"','"+entrega+"','"+prestador+"','"+id_prestador+"','editar');\" />"; 
-        var cerrarPrestamo = "<input type='button' id=\"cerrarPrestamo"+id+"\" value='Cerrar' onclick=\"cerrarPrestamo('"+id+"');\" />"; 
-        return edit+cerrarPrestamo;
-    }
-	
-	function agregarPrestamo () {            
-		adminPrestamo();
-    }
+	  
+    $("#grid-data-prestamo").bootgrid(
+        {
+        caseSensitive:false ,/* make search case insensitive */
+            formatters: {
+        "commands": function(column, row)
+        {
+        return "<input  value='Editar' onclick=\"adminPrestamo('"+row.idPrestamo+"','"+row.practicante+"','"+row.idPracticante+"','"+row.prestamo+"','"+row.entrega+"','"+row.prestador+"','"+row.idPrestador+"','editar');\" type='button' class=\"btn btn-xs btn-default command-edit\"><span class=\"fa fa-pencil\"></span></input> " +
+        "<input type='button' value='Cerrar' onclick=\"cerrarPrestamo('"+row.idPrestamo+"');\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id_usuario + "\"><span class=\"fa fa-trash-o\"></span></input>";
+        }}
+        });
+
 	
      $( "#txtPrestamo").datepicker({dateFormat: 'dd-mm-yy'}).datepicker("setDate",new Date());
     
      $('#txtEntrega').datepicker({dateFormat: 'dd-mm-yy'}).datepicker("setDate",new Date());
+  
+    
     
 });
 
@@ -89,13 +35,13 @@ function adminPrestamo(id,practicante,id_practicante,prestamo,entrega,prestador,
             resizable:false,
             title:'Prestamo.',
             height:600,
-            width:450,
+            width:600,
             modal:true,
             open:function(){
-                
+                 
             	$("#id-prestamo").val("");
             	$(".clean").val("");
-                cargarGridDetallePrestamo(id);
+                //cargarGridDetallePrestamo(id);
     			//validador
                 $("#frmPrestamo").validate({  
     				  
@@ -125,41 +71,23 @@ function adminPrestamo(id,practicante,id_practicante,prestamo,entrega,prestador,
     				}  
     			});
 				
-                    //grid detalle
-						jQuery("#jqgDetallePrestamo").jqGrid({ 
-							url:'controllers/PrestamosController.php?op=2&id='+id, 
-							datatype: "json",
-							mtype: 'POST',
-							height: 190,
-							width: 400, 
-							colNames:['id','codigo','titulo','idLibro','estado','fechaDevuelto','action'], 
-							colModel:[ 
-                                {name:'id',index:'id', width:10,hidden:true}, 
-                                {name:'codigo',index:'codigo',  width: 10}, 
-                                {name:'titulo',index:'titulo',  width: 10},
-                                {name:'idLibro',index:'idLibro',width: 10,hidden:true},
-                                {name:'estado',index:'estado',width: 10,hidden:true},
-                                {name:'fechaDevuelto',index:'fechaDevuelto',width: 10},
-                                {name:'action',index:'action',sortable:false, width: 10, formatter: displayButtonsDetalle},
-                             ], 
-                                afterInsertRow : function(rowid, rowdata)
-                                {
-                                if (rowdata.estado == "1"){
-                                 $("#actualizarLibro"+rowid).hide();
-                                }
-                                },
-                            pager: '#pager-detalleprestamo', 
-							rowNum:10, 
-							rowList:[100,200,300], 
-							sortname: 'id', 
-							sortorder: "asc",
-							viewrecords: true, 
-							caption: 'Detalle',
-							toppager: true
-						})
+                
+                          //gridDetallePrestamo
+                    $("#grid-data-detalle-prestamo").bootgrid(
+                    {
+                    caseSensitive:false ,
+                    url: 'controllers/gridDetallePrestamo.php?id='+id,
+                        formatters: {
+                    "commands": function(column, row)
+                    {
+                    return "<input  value='Entregar' onclick=\"actualizarEstadoLibro('"+row.idDetallePrestamo+"','"+row.idLibro+"');\" type='button' class=\"btn btn-xs btn-default command-edit\"><span class=\"fa fa-pencil\"></span></input> "; 
+                    }}
+                    });
+        //
             	
             	$("#txtPrestamo").val(currentDate);
 						if(option  == "editar"){
+                           
 							$("#id-prestamo").val(id);
 							$("#txtPrestamo").val(prestamo);
 							$("#txtEntrega").val(entrega);
@@ -223,7 +151,8 @@ function adminPrestamo(id,practicante,id_practicante,prestamo,entrega,prestador,
 									type : $('#frmPrestamo').attr("method"),
 									data : $('#frmPrestamo').serialize(),
 									complete:function (jqXHR,status) {
-										$("#dlgPrestamo").dialog("close");	
+										$("#dlgPrestamo").dialog("close");
+                                        $('#grid-data-prestamo').bootgrid('reload');
 									},
 									error:function (error) {
 										$("#dlgPrestamo").dialog("close");
@@ -249,23 +178,16 @@ function adminPrestamo(id,practicante,id_practicante,prestamo,entrega,prestador,
 		$("#jqgDetallePrestamo").trigger("reloadGrid");					
 	}
 	
-	function displayButtonsDetalle(cellvalue, options, rowObject)
-    {
-        var id = rowObject[0];
-        var edit = "<input  type='button' id=\"actualizarLibro"+id+"\"   value='Entregar' onclick=\"actualizarEstadoLibro('"+rowObject+"');\"    />"; 
-        return edit;
-    }
 
-function actualizarEstadoLibro(event,obj){
-    var myOptions = obj.split(',');
-     var idLibro = myOptions[3];
-     var idDetallePrestamo = myOptions[0];
+function actualizarEstadoLibro(idDetPres,idLib){
+     var idLibro =idLib ;
+     var idDetallePrestamo =idDetPres ;
     
     $.ajax({
         url :'controllers/PrestamosController.php?op=3&id='+idLibro ,
         type : "post",
         complete:function (jqXHR,status) {
-          $("#jqgDetallePrestamo").trigger("reloadGrid");
+            //actualizar grid
           actualizarFechaDetallePrestamo(idDetallePrestamo);
         },
         error:function (error) {

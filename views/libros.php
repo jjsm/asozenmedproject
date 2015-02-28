@@ -9,11 +9,25 @@
     
     </head>
     
-<body>
-
-    <table id='jqgLibro'></table>
-	<div id='pagerlibro'></div>
-
+<body>  
+    
+      <table id="grid-data-libro" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" data-url="controllers/gridlibros.php">
+            <thead>
+                <tr>
+                <th data-column-id="id_libro" data-visible="false" data-type="numeric"  data-identifier="true">ID</th>
+                <th data-column-id="titulo">titulo</th>
+                <th data-column-id="codigo" >codigo</th>
+                <th data-column-id="descripcion" >descripcion</th>
+                <th data-column-id="editorial" >editorial</th>
+                <th data-column-id="año" >año</th>
+                <th data-column-id="observaciones" >observaciones</th>
+                <th data-column-id="estado" >estado</th>
+                <th data-column-id="autores" >autores</th>
+                <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
+                </tr>
+            </thead>	
+    </table>
+    
 	<!-- Dialogos -->
 	<div class='edit_modal' id='dlgLibro' style='display:none'>
 		<form  id='frmLibro' method='post'  style="display:none" class="form-inline" role="form">
@@ -27,7 +41,7 @@
 	        <div class="form-group"><input type='text' class="form-control required clean" placeholder="Autor" name='autores' id='autores' /></div>
         </form> 
         
-        <form ' id='frmLibroCancel' method='post' action='' style="display:none">
+        <form  id='frmLibroCancel' method='post' action='' style="display:none">
         	<input type='hidden' name='id'  id='id'>
         	<div class='delete_modal'>¡Estás seguro que deseas eliminar el libro <label id="lbllibro"></label>?</div>
         </form>

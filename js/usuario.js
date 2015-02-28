@@ -1,70 +1,20 @@
 $(document).ready(function () {
-	
-	jQuery("#jqgUsuario").jqGrid({ 
-		// url:'controllers/UsuariosController.php?op=0', 
-		url:'controllers/ensayogrid.php',
-		datatype: "json",
-		mtype: 'POST',
-		height:'100%',
-		width: 930, 
-		colNames:['id','cedula','usuario','correo','celular','telefono','Acciones'], 
-		colModel:[ 
-		          {name:'id',index:'id_usuario', width:55,hidden:true}, 
-		          {name:'cedula',index:'cedula',  width: 80, editable:true}, 
-		          {name:'usuario',index:'usuario',  width: 80, editable:true}, 
-		          {name:'correo',index:'correo', width:90, editable:true},
-                  {name:'celular',index:'celular', width:90, editable:true},
-                  {name:'telefono',index:'telefono', width:90, editable:true},
-                  {name:'action',index:'action',sortable:false, formatter: displayButtons},
-		     	], 
-         loadComplete: function() {
-                  $('#jqgUsuario').setGridParam({datatype:'json'}).trigger('reloadGrid',[{current:true}]);
- 
-          },
-         onSelectRow: function(rowid, status, e) {
-                var $div = $(e.target).closest(".ui-pg-div");
-                if ($div.hasClass("ui-inline-del") && $div.attr("id") === "jDeleteButton_" + rowid) {
-                    alert("Delete button was clicked");
-                }// else if ($div.hasClass("ui-inline-edit") && $div.attr("id") === "jEditButton_" + rowid) {
-                //    alert("Edit button was clicked");
-                //}
-         },
-		 pager: '#pagerusuario', 
-		 rowNum:10, 
-		 rowList:[10,20,30], 
-		 sortname: 'id', 
-		 sortorder: "asc",
-		 viewrecords: true, 
-		 caption: 'USUARIOS',
-         loadonce: true,
-		 toppager: true
-		  })
-		  .navGrid('#pagerusuario',{edit:false,add:false,del:false,search:false})
-		  //Boton Agregar
-		  .navButtonAdd('#pagerusuario',{caption:"Add", buttonicon:"ui-icon-add", onClickButton: function(){ agregarUsuario();
-		   }, 
-		   position:"last"
-		});
-	
 
-	
-	function displayButtons(cellvalue, options, rowObject)
-    {
+    
+    $("#grid-data").bootgrid(
+        {
+        caseSensitive:false ,/* make search case insensitive */
+            formatters: {
+        "commands": function(column, row)
+        {
+        return "<input  value='Editar' onclick=\"adminUsuario('"+row.id_usuario+"','"+row.cedula+"','"+row.usuario+"','"+row.correo+"','"+row.celular+"','"+row.telefono+"', 'editar');\" type='button' class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id_usuario + "\"><span class=\"fa fa-pencil\"></span></input> " +
+        "<input type='button' value='Eliminar' onclick=\"adminUsuario('"+row.id_usuario+"','"+ row.cedula+"','"+row.usuario+"','"+row.correo+"','"+row.celular+"','"+row.telefono+"','eliminar');\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id_usuario + "\"><span class=\"fa fa-trash-o\"></span></input>";
+        }}
+        });
+    
 
-        var id = rowObject[0];
-	    var cedula =  rowObject[1];
-	    var usuario =  rowObject[2];
-	    var correo =  rowObject[3];
-	    var celular =  rowObject[4];
-	    var telefono =  rowObject[5];
-        var edit = "<input  type='button' id=\"editarUsuario"+id+"\"  value='Editar' onclick=\"adminUsuario('"+id+"','"+ cedula+"','"+usuario+"','"+correo+"','"+celular+"','"+telefono+"', 'editar');\"    />",  
-             restore = "<input type='button' id=\"editarUsuario"+id+"\"  value='Eliminar' onclick=\"adminUsuario('"+id+"','"+ cedula+"','"+usuario+"','"+correo+"','"+celular+"','"+telefono+"','eliminar');\" />";
-        return edit+restore;
-    }
-	function agregarUsuario () { 
-		adminUsuario();
-	}
-	//----------------------TABS
+    
+	//-----------------------------------------------------------------------------------------TABS
 	$( "#tabs" ).tabs({
 	      beforeLoad: function( event, ui ) {
 	        ui.jqXHR.error(function() {
@@ -76,7 +26,7 @@ $(document).ready(function () {
 	    });
 	
 	
-
+    /*---fin ready ---*/
 });
 
 
@@ -135,8 +85,7 @@ function adminUsuario(id,cedula,usuario,correo,celular,telefono,option){
 					}
 				}  
 			});
-							
-        	$("#id").val(id);
+        	$("#id-usuario").val(id);
         	$("#cedula").val(cedula);
         	$("#name-user").val(usuario);
         	$("#correo").val(correo);
@@ -148,14 +97,13 @@ function adminUsuario(id,cedula,usuario,correo,celular,telefono,option){
 				//$("#frmUsuario").submit(function(event){
 					if ($("#frmUsuario").validate().form() == true){
 						
-						
 						$.ajax({
 							url : url,
 							type : $("#frmUsuario").attr("method"),
 							data : $("#frmUsuario").serialize(),
 							complete:function () {
 								$('#dlgUsuario').dialog("close");
-                                $('#jqgUsuario').setGridParam({datatype:'json'}).trigger('reloadGrid',[{current:true}]);
+                                $('#grid-data').bootgrid('reload');
 							 }, error:function (error) {
 								$('.insert_modal').dialog("close");
 								$("<div class='insert_modal'>Ha ocurrido un error!</div>").dialog({resizable:false,title:'Error!.',height:200,width:450,modal:true});

@@ -38,12 +38,24 @@
     else
     $limit=" LIMIT $limit_l,$limit_h ";
     //NOTE: No security here please beef this up using a prepared statement - as is this is prone to SQL injection.
-    $sql="SELECT id_usuario,cedula,usuario,correo,celular,telefono FROM tblusuarios $limit ";
+    $sql="SELECT  prestamos.id_prestamo AS idPrestamo,
+    					 usuario.usuario AS practicante,
+    					 usuario.id_usuario AS idPracticante,
+    					 DATE_FORMAT(prestamos.fechaPrestamo, '%d-%m-%Y')  AS prestamo,
+						 DATE_FORMAT(prestamos.fechaEntrega, '%d-%m-%Y')  AS entrega,
+    					 prestador.usuario AS prestador,
+    					 prestador.id_usuario AS idPrestador,
+						 DATE_FORMAT(prestamos.fechaRegistro, '%d-%m-%Y')  AS devuelto,
+                         prestamos.estadoPres AS estado
+    			
+				FROM 	tblPrestamos prestamos 
+					INNER JOIN tblusuarios usuario ON prestamos.idUsuarios = usuario.id_usuario  
+					INNER JOIN tblusuarios prestador ON prestamos.idPrestamista=prestador.id_usuario  $limit ";
     $stmt=$conn->prepare($sql);
     $stmt->execute();
     $results_array=$stmt->fetchAll(PDO::FETCH_ASSOC);
     $json=json_encode( $results_array );
-    $nRows=$conn->query("SELECT count(*) FROM tblusuarios ")->fetchColumn();
+    $nRows=$conn->query("SELECT COUNT(*) AS count FROM tblPrestamos ")->fetchColumn();
     header('Content-Type: application/json'); //tell the broswer JSON is coming
     if (isset($_REQUEST['rowCount']) ) //Means we're using bootgrid library
     echo "{ \"current\": $current, \"rowCount\":$rows, \"rows\": ".$json.", \"total\": $nRows }";

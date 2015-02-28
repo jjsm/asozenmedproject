@@ -1,64 +1,19 @@
 $(document).ready(function () {
 	
-	jQuery("#jqgLibro").jqGrid({ 
-		url:'controllers/LibrosController.php?op=0', 
-		datatype: "json",
-		mtype: 'POST',
-		height: '100%',
-		width:800, 
-		colNames:['id','titulo','codigo','descripcion','editorial','año','observaciones','estado','Acciones'], 
-		colModel:[ 
-		          {name:'id',index:'id_libro', width:55,hidden:true}, 
-		          {name:'titulo',index:'cedula',  width: 80}, 
-		          {name:'codigo',index:'usuario',  width: 80}, 
-		          {name:'descripcion',index:'correo', width:90},
-		          {name:'editorial',index:'celular', width:90},
-		          {name:'año',index:'telefono', width:90},
-		          {name:'observaciones',index:'celular', width:90},
-		          {name:'estado',index:'telefono', width:90},
-		          {name:'action',index:'action',sortable:false, formatter: displayButtons},
-		          ], 
-         		       
-         loadComplete: function() {
-            
-                  $('#jqgLibro').setGridParam({datatype:'json'}).trigger('reloadGrid',[{current:true}]);
-          },
-		 pager: '#pagerlibro', 
-		 rowNum:10, 
-		 rowList:[10,20,30], 
-		 sortname: 'id', 
-		 sortorder: "asc",
-		 viewrecords: true, 
-		 caption: 'LIBROS',
-         loadonce: true,
-         shrinkToFit : false,
-		 toppager: true
-		  })
-		  .navGrid('#pagerlibro',{edit:false,add:false,del:false,search:false})
-		  //Boton Agregar
-		  .navButtonAdd('#pagerlibro',{
-		   caption:"Add", 
-		   buttonicon:"ui-icon-add", 
-		   onClickButton: function(){ 
-			   agregarLibro();
-		   }, 
-		   position:"last"
-		});
-	
-	function agregarLibro(){
-		adminLibro();
-	}
-	
-	function displayButtons(cellvalue, options, rowObject)
-    {	var id = rowObject[0];
-        var edit = "<input  type='button' id=\"editarLibro"+id+"\"  value='Editar' onclick=\"adminLibro('"+rowObject+"','editar');\"    />",
-             restore = "<input type='button' id=\"editarLibro"+id+"\"  value='Eliminar' onclick=\"adminLibro('"+rowObject+"','eliminar');\" />";
-        return edit+restore;
-    }
+	    $("#grid-data-libro").bootgrid(
+        {
+        caseSensitive:false ,/* make search case insensitive */
+            formatters: {
+        "commands": function(column, row)
+        {
+        return "<input  value='Editar' onclick=\"adminLibro('"+row.id_libro+"','"+row.titulo+"','"+row.codigo+"','"+row.descripcion+"','"+row.editorial+"','"+row.año+"','"+row.observaciones+"','"+row.estado+"','" +row.autores+"', 'editar');\" type='button' class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id_usuario + "\"><span class=\"fa fa-pencil\"></span></input> " +
+        "<input type='button' value='Eliminar' onclick=\"adminLibro('"+row.id_libro+"','"+row.titulo+"','"+row.codigo+"','"+row.descripcion+"','"+row.editorial+"','"+row.año+"','"+row.observaciones+"','"+row.estado+"','" +row.autores+"','eliminar');\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id_usuario + "\"><span class=\"fa fa-trash-o\"></span></input>";
+        }}
+        });
 
 });
 
-function adminLibro(opt,option){
+function adminLibro(id_libro ,titulo ,codigo ,descripcion ,editorial ,año ,observacion ,estado,autores,option){
 	 $("#frmLibroCancel").hide();
 	 $("#frmLibro").show();
 	
@@ -68,23 +23,10 @@ function adminLibro(opt,option){
 	
 	if(option == 'editar'){
 		url = 'controllers/LibrosController.php?op=2';
-	var myOptions = opt.split(',');
-
-	    var id = myOptions[0];
-	    var titulo = myOptions[1];
-	    var codigo = myOptions[2];
-	    var descripcion = myOptions[3];
-	    var editorial = myOptions[4];
-	    var año = myOptions[5];
-	    var observaciones= myOptions[6];
-	    var estado = myOptions[7];
-	    var autores = myOptions[8];
+    var id = id_libro, titulo = titulo, codigo = codigo, descripcion = descripcion, editorial = editorial, año = año, observaciones= observacion, estado = estado,autores = autores;
 	}else if(option == 'eliminar'){
         url = 'controllers/LibrosController.php?op=3';
-		 var myOptions = opt.split(',');
-
-   		 var id = myOptions[0];
-   		 var nombre = myOptions[2];
+   		 var id = id_libro, nombre = titulo;
 	}
 		
         $("#dlgLibro").dialog({
@@ -142,7 +84,7 @@ function adminLibro(opt,option){
                     data : $('#frmLibro').serialize(),
                     complete:function () {
                         $('#dlgLibro').dialog("close");
-                         $('#jqgLibro').setGridParam({datatype:'json'}).trigger('reloadGrid',[{current:true}]);
+                         $('#grid-data-libro').bootgrid('reload');
                     }, error:function (error) {
                         $('.insert_modal').dialog("close");
                         $("<div class='insert_modal'>Ha ocurrido un error!</div>").dialog({

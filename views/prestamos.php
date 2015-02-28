@@ -7,8 +7,23 @@
 </head>
 <body>
 
-    <table id='jqg-prestamo'></table>
-	<div id='pager-prestamo'></div>
+
+    <table id="grid-data-prestamo" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" data-url="controllers/gridPrestamo.php">
+            <thead>
+                <tr>
+                <th data-column-id="idPrestamo" data-type="numeric" data-visible="false"  data-identifier="true">ID</th>
+                <th data-column-id="practicante" >Practicante</th>
+                <th data-column-id="idPracticante" data-visible="false" >idPracticante</th>
+                <th data-column-id="prestamo" >Prestamo</th>
+                <th data-column-id="entrega" >Entrega</th>
+                <th data-column-id="prestador"  >Prestador</th>
+                <th data-column-id="idPrestador" data-visible="false" >idPrestador</th>
+                <th data-column-id="devuelto" >Devuelto</th>
+                <th data-column-id="estado" >Estado</th>
+                <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
+                </tr>
+            </thead>	
+    </table>
 
 	<!-- Dialogos -->
 	<div  id='dlgPrestamo' style='display:none'>
@@ -28,8 +43,19 @@
 	        					
         </form> 
         
-            <table id='jqgDetallePrestamo'></table>
-			<div id='pager-detalleprestamo'></div>
+                <table id="grid-data-detalle-prestamo"  class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" >
+            <thead>
+                <tr>
+                <th data-column-id="idDetallePrestamo" data-visible="false" data-type="numeric"  data-identifier="true">ID</th>
+                <th data-column-id="codigo" >Codigo</th>
+                <th data-column-id="titulo"  >Titulo</th>
+                <th data-column-id="idLibro" data-visible="false" >idLibro</th>
+                <th data-column-id="estado"  >Estado</th>
+                <th data-column-id="fechaDevuelto"  >Devuelto</th>
+                <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
+                </tr>
+            </thead>	
+    </table>
 	</div>
 </body>
 </html>

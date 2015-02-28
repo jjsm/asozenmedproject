@@ -79,7 +79,9 @@ class Conexion extends configuracion //clase principal de conexion y consultas
     		echo mysql_error();
     	$records=$query->fetchAll();
     	
-    	$result=array($records,$total_pages,$post['page'],$count);
+    	//$result=array($records,$total_pages,$post['page'],$count);
+        
+        $result=array($post['page'],$count,$records,$total_pages);
     	
     	$this->conexion = null;
 		return $result;   	 

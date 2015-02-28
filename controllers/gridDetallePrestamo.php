@@ -38,12 +38,26 @@
     else
     $limit=" LIMIT $limit_l,$limit_h ";
     //NOTE: No security here please beef this up using a prepared statement - as is this is prone to SQL injection.
-    $sql="SELECT id_usuario,cedula,usuario,correo,celular,telefono FROM tblusuarios $limit ";
+   $id =$_GET["id"];
+        
+        $sql="SELECT  detallePrestamo.id_detallePrestamo  AS idDetallePrestamo,
+						libros.codigo as codigo,
+						libros.titulo as titulo,
+                        libros.id_libro as idLibro,
+                        detallePrestamo.estadoDetalle  as estado,
+                        detallePrestamo.fechaDevuelto as fechaDevuelto
+                        
+    
+				FROM 	tblDetallePrestamo detallePrestamo
+					INNER JOIN tblPrestamos prestamos ON detallePrestamo.idPrestamo = prestamos.id_prestamo
+					INNER JOIN tblLibros libros ON detallePrestamo.idLibros=libros.id_libro 
+    			WHERE prestamos.id_prestamo =$id $limit ";
+        
     $stmt=$conn->prepare($sql);
     $stmt->execute();
     $results_array=$stmt->fetchAll(PDO::FETCH_ASSOC);
     $json=json_encode( $results_array );
-    $nRows=$conn->query("SELECT count(*) FROM tblusuarios ")->fetchColumn();
+    $nRows=$conn->query("SELECT COUNT(*) AS count FROM tblDetallePrestamo ")->fetchColumn();
     header('Content-Type: application/json'); //tell the broswer JSON is coming
     if (isset($_REQUEST['rowCount']) ) //Means we're using bootgrid library
     echo "{ \"current\": $current, \"rowCount\":$rows, \"rows\": ".$json.", \"total\": $nRows }";
