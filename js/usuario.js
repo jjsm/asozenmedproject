@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    
+    //-------------------------------------------------------------------------------------------GRID
     $("#grid-data").bootgrid(
         {
         caseSensitive:false ,/* make search case insensitive */
@@ -24,6 +24,12 @@ $(document).ready(function () {
 	        });
 	      }
 	    });
+    
+    
+    //-------------------------------------------------------------------------------------------AGREGARUSUARIOS
+     $("#btnAgregarUsuario").off("click.AgregarUsuario").on("click.AgregarUsuario",function(){
+        adminUsuario();
+     })
 	
 	
     /*---fin ready ---*/

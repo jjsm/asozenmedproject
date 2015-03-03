@@ -7,7 +7,7 @@
 </head>
 <body>
 
-
+    <input type="button" value="Agregar" id="btnAgregarPrestamo" /> 
     <table id="grid-data-prestamo" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" data-url="controllers/gridPrestamo.php">
             <thead>
                 <tr>
@@ -37,13 +37,13 @@
 	        					<input type='hidden' name='id-prestado'  id='id-prestado'>
 	        					
 	        <div class="form-group"><input type='text' class="form-control required clean" name='libro' id='txtLibro' placeholder="Busque Un Libro"/>
-	        						<input type='button' class="form-control " name="insertarlibro" value="Libro" id="btnInsertarLibro"/></div><br>
+	        						<input type='button' class="form-control " name="insertarlibro" value="Ingrese Libro" id="btnInsertarLibro"/></div><br>
 	        						<input type='hidden' name='id-libro'  id='id-libro'>
 	        					
 	        					
         </form> 
         
-                <table id="grid-data-detalle-prestamo"  class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" >
+                <table id="grid-data-detalle-prestamo"  class="table table-condensed table-hover table-striped" data-ajax="true" >
             <thead>
                 <tr>
                 <th data-column-id="idDetallePrestamo" data-visible="false" data-type="numeric"  data-identifier="true">ID</th>

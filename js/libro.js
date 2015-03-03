@@ -1,5 +1,5 @@
 $(document).ready(function () {
-	
+	     //-------------------------------------------------------------------------------------------------GRIDD
 	    $("#grid-data-libro").bootgrid(
         {
         caseSensitive:false ,/* make search case insensitive */
@@ -10,6 +10,12 @@ $(document).ready(function () {
         "<input type='button' value='Eliminar' onclick=\"adminLibro('"+row.id_libro+"','"+row.titulo+"','"+row.codigo+"','"+row.descripcion+"','"+row.editorial+"','"+row.año+"','"+row.observaciones+"','"+row.estado+"','" +row.autores+"','eliminar');\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id_usuario + "\"><span class=\"fa fa-trash-o\"></span></input>";
         }}
         });
+    
+    
+    //-------------------------------------------------------------------------------------------------------aGREGARlIBRO
+         $("#btnAgregarLibro").off("click.AgregarLibro").on("click.AgregarLibro",function(){
+        adminLibro();
+     })
 
 });
 

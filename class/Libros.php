@@ -59,7 +59,7 @@ class Libros
     }
     
     public function autoComplete($valores){
-    	$sql = "SELECT id_libro,titulo FROM tblLibros WHERE titulo LIKE ? ";//and estado!=0";
+    	$sql = "SELECT id_libro,titulo FROM tblLibros WHERE titulo LIKE ? and estado!=0";
     	$resultados =$this->oConectar->consultar_ac($valores,$sql);
     	$result = array();
     	$i = 0;

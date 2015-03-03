@@ -10,7 +10,7 @@
     </head>
     
 <body>  
-    
+         <input type="button" value="Agregar" id="btnAgregarLibro" /> 
       <table id="grid-data-libro" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" data-url="controllers/gridlibros.php">
             <thead>
                 <tr>

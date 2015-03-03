@@ -59,18 +59,21 @@ function insertarPrestamo($prestamos){
 	$idPrestamo = $_POST['id'];
     $libros = Libros::singleton();
 	//Valida antes si el encabezado ya no fue creado cuando se inserta un libro por primera vez 
+
 	if(empty($idPrestamo)){
-        echo "Prestamo Creado con ID ".$idPrestamo;
+        echo "ENTRO!!";
 		$valores = array($f_prestamo,$f_entrega,$practicante,$prestado);
 		$idPrestamo =$prestamos->insertarEncabezadoPrestamo($valores);
 	}
-  
+    
+    echo  "idPrestamo ".$idPrestamo;
     //Si existe libro y prestamo se agrega al detalle
 	if(!empty($idPrestamo) && !empty($idLibro)){
 		$valores2=array($idLibro,$idPrestamo);
 		$prestamos->insertarLibroPrestamo($valores2);
         //
         $valores3=array($idLibro);
+        //ESTADOLIBRO 0 NO DISPONIBLE
         $libros->actualizarEstadoLibro(0,$valores3);
 	}
 	
@@ -95,6 +98,7 @@ function listarDetallePrestamo($prestamos,$detalle){
 function actualizarEstadoLibro($id){
     $valores=array($id);
     $libros = Libros::singleton();
+    //ESTADOLIBRO 1 dISPONIBLE
     $libros->actualizarEstadoLibro(1,$valores);
 }
 

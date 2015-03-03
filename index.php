@@ -40,7 +40,7 @@
     <div id="tabs-1" style="align:center">
         
 
-          
+     <input type="button" value="Agregar" id="btnAgregarUsuario" /> 
      <table id="grid-data" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" data-url="controllers/ensayogrid.php">
             <thead>
                 <tr>
@@ -55,8 +55,6 @@
             </thead>	
     </table>    
 
-        <!-- <table id='jqgUsuario'></table> -->
-	    <!-- <div id='pagerusuario'></div> -->
     </div>
 </div>
 <!-- Dialogos -->

@@ -1,5 +1,5 @@
 $(document).ready(function () {
-	  
+	//------------------------------------------------------------------------------------------------GRIDD  
     $("#grid-data-prestamo").bootgrid(
         {
         caseSensitive:false ,/* make search case insensitive */
@@ -16,6 +16,10 @@ $(document).ready(function () {
     
      $('#txtEntrega').datepicker({dateFormat: 'dd-mm-yy'}).datepicker("setDate",new Date());
   
+        //-------------------------------------------------------------------------------------------------------AGREGARPRESTAMO
+         $("#btnAgregarPrestamo").off("click.AgregarpRESTAMO").on("click.AgregarpRESTAMO",function(){
+        adminPrestamo();
+     })
     
     
 });
@@ -34,7 +38,7 @@ function adminPrestamo(id,practicante,id_practicante,prestamo,entrega,prestador,
     $("#dlgPrestamo").dialog({
             resizable:false,
             title:'Prestamo.',
-            height:600,
+            height:850,
             width:600,
             modal:true,
             open:function(){
@@ -70,9 +74,9 @@ function adminPrestamo(id,practicante,id_practicante,prestamo,entrega,prestador,
     					}
     				}  
     			});
-				
+				    $('#grid-data-detalle-prestamo').bootgrid('destroy');
                 
-                          //gridDetallePrestamo
+                    //-------------------------------------------------------GRIDD
                     $("#grid-data-detalle-prestamo").bootgrid(
                     {
                     caseSensitive:false ,
@@ -83,7 +87,7 @@ function adminPrestamo(id,practicante,id_practicante,prestamo,entrega,prestador,
                     return "<input  value='Entregar' onclick=\"actualizarEstadoLibro('"+row.idDetallePrestamo+"','"+row.idLibro+"');\" type='button' class=\"btn btn-xs btn-default command-edit\"><span class=\"fa fa-pencil\"></span></input> "; 
                     }}
                     });
-        //
+                  //
             	
             	$("#txtPrestamo").val(currentDate);
 						if(option  == "editar"){
@@ -123,7 +127,20 @@ function adminPrestamo(id,practicante,id_practicante,prestamo,entrega,prestador,
 									complete:function (jqXHR,status) {
 										
                                         $("#id-prestamo").val(jqXHR.responseText);
-										cargarGridDetallePrestamo(jqXHR.responseText);	
+										$('#grid-data-detalle-prestamo').bootgrid('destroy');
+                                        
+                                        //--------------------------------------------------GRIDD
+                                                   $("#grid-data-detalle-prestamo").bootgrid(
+                                                    {
+                                                    caseSensitive:false ,
+                                                    url: 'controllers/gridDetallePrestamo.php?id='+id,
+                                                        formatters: {
+                                                    "commands": function(column, row)
+                                                    {
+                                                    return "<input  value='Entregar' onclick=\"actualizarEstadoLibro('"+row.idDetallePrestamo+"','"+row.idLibro+"');\" type='button' class=\"btn btn-xs btn-default command-edit\"><span class=\"fa fa-pencil\"></span></input> "; 
+                                                    }}
+                                                    });
+                                        //------------------------------------------------------
                                         $("#txtLibro").val("");
                                         $("#txtLibro").focus();	
 									},
@@ -172,11 +189,6 @@ function adminPrestamo(id,practicante,id_practicante,prestamo,entrega,prestador,
     
 }
 
-	function cargarGridDetallePrestamo(idDetalle){
-		var url = 'controllers/PrestamosController.php?op=2&id='+idDetalle;
-		$("#jqgDetallePrestamo").jqGrid('setGridParam', { url: url });
-		$("#jqgDetallePrestamo").trigger("reloadGrid");					
-	}
 	
 
 function actualizarEstadoLibro(idDetPres,idLib){
@@ -189,6 +201,7 @@ function actualizarEstadoLibro(idDetPres,idLib){
         complete:function (jqXHR,status) {
             //actualizar grid
           actualizarFechaDetallePrestamo(idDetallePrestamo);
+          
         },
         error:function (error) {
             $("#dlgPrestamo").dialog("close");
@@ -210,7 +223,7 @@ function actualizarFechaDetallePrestamo(idDetalle){
         url :'controllers/PrestamosController.php?op=4&id='+idDetalle ,
         type : "post",
         complete:function (jqXHR,status) {
-            $("#jqgDetallePrestamo").trigger("reloadGrid");
+            $('#grid-data-detalle-prestamo').bootgrid('reload');
         },
         error:function (error) {
             $("#dlgPrestamo").dialog("close");

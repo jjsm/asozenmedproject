@@ -55,7 +55,7 @@ class Prestamos
     }
     
     public function insertarEncabezadoPrestamo($valores)
-    {		
+    {	
     	$sql='INSERT INTO tblPrestamos VALUES (null,?,?,null,?,?,1)';
     	$id = $this->oConectar->ejecutarSentencia($valores,$sql);
     	return $id;
