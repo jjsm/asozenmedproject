@@ -27,7 +27,7 @@ $(document).ready(function () {
     
     
     //-------------------------------------------------------------------------------------------AGREGARUSUARIOS
-     $("#btnAgregarUsuario").off("click.AgregarUsuario").on("click.AgregarUsuario",function(){
+     $("#btnAgregarUsuario").on("click",function(){
         adminUsuario();
      })
 	

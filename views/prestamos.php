@@ -37,7 +37,7 @@
 	        					<input type='hidden' name='id-prestado'  id='id-prestado'>
 	        					
 	        <div class="form-group"><input type='text' class="form-control required clean" name='libro' id='txtLibro' placeholder="Busque Un Libro"/>
-	        						<input type='button' class="form-control " name="insertarlibro" value="Ingrese Libro" id="btnInsertarLibro"/></div><br>
+	        						<input type='button' class="form-control " name="insertarlibro" value="Ingrese Libro" id="btnInsertarLibro" onclick="insertarLibroDetalle()"/></div><br>
 	        						<input type='hidden' name='id-libro'  id='id-libro'>
 	        					
 	        					

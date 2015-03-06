@@ -26,6 +26,7 @@ class Conexion extends configuracion //clase principal de conexion y consultas
     public function ejecutarSentencia($valores,$sql)
     {
     	try {
+           
     		$this->conexion->beginTransaction();
     		$query = $this->conexion->prepare($sql);
     		
@@ -39,7 +40,7 @@ class Conexion extends configuracion //clase principal de conexion y consultas
     
     	} catch (PDOException $e) {
     		$this->conexion->rollBack();
-    		$e->getMessage();
+    		echo $e->getMessage();
     	}
     	$this->conexion = null;
     	

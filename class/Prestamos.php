@@ -55,16 +55,16 @@ class Prestamos
     }
     
     public function insertarEncabezadoPrestamo($valores)
-    {	
+    {	$oCnx = new Conexion(); 
     	$sql='INSERT INTO tblPrestamos VALUES (null,?,?,null,?,?,1)';
-    	$id = $this->oConectar->ejecutarSentencia($valores,$sql);
+    	$id = $oCnx->ejecutarSentencia($valores,$sql);
     	return $id;
     }
     
     public function insertarLibroPrestamo($valores)
-    {	
-    	$sql='INSERT INTO tblDetallePrestamo VALUES (null,null,?,?,0)';
-    	$id =$this->oConectar->ejecutarSentencia($valores,$sql);
+    {	$oCnx = new Conexion();
+        $sql='INSERT INTO tblDetallePrestamo VALUES (null,null,?,?,1)';
+    	$id =$oCnx->ejecutarSentencia($valores,$sql);
     	return $id;
     }
     
@@ -103,7 +103,7 @@ class Prestamos
     }
     
     public function actualizarFechaDetalle($valores){
-        $sql = 'UPDATE tblDetallePrestamo SET fechaDevuelto= Now(), estadoDetalle=1 WHERE id_detallePrestamo= ? ';
+        $sql = 'UPDATE tblDetallePrestamo SET fechaDevuelto= Now(), estadoDetalle=0 WHERE id_detallePrestamo= ? ';
         $this->oConectar->ejecutarSentencia($valores,$sql);
     }
     
@@ -113,14 +113,17 @@ class Prestamos
     }
     
     public function cerrarPrestamo($valores){
-      $sql = 'UPDATE tblDetallePrestamo SET estadoDetalle=1, fechaDevuelto = Now() WHERE idPrestamo = ? AND  estadoDetalle!= 1 ';
-      $this->oConectar->ejecutarSentencia($valores,$sql);  
+         $oCnx = new Conexion();    
+        $sql = 'UPDATE tblDetallePrestamo SET estadoDetalle=1, fechaDevuelto = Now() WHERE idPrestamo = ? AND  estadoDetalle!= 1 ';
+        $oCnx->ejecutarSentencia($valores,$sql);
+
     }
     
     public function consultarLibrosPrestamo($valores){
+        $oCnx = new Conexion();
         $sql = 'SELECT DISTINCT  idLibros  From tblDetallePrestamo WHERE idPrestamo=? ';
         
-        $resultados =$this->oConectar->consultar_ac($valores,$sql);
+        $resultados =$oCnx->consultar_ac($valores,$sql);
     	$result = array();
         $i=0;
     	foreach ($resultados as $row) {
@@ -131,8 +134,9 @@ class Prestamos
     }
     
     public function  actEstadoPrestamo($valores){
+      $oCnx = new Conexion();
      $sql = 'UPDATE tblPrestamos SET estadoPres=0,fechaRegistro=Now() WHERE id_prestamo=? '  ;
-     $this->oConectar->ejecutarSentencia($valores,$sql);
+     $oCnx->ejecutarSentencia($valores,$sql);
     }
  
 }

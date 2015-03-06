@@ -9,13 +9,16 @@
 		$servidor = $ajustes["database"]["host"]; //servidor como localhost o 127.0.0.1 usar este ultimo cuando el puerto sea diferente
 		$puerto = $ajustes["database"]["port"]; //Puerto de la BD
 		$basedatos = $ajustes["database"]["schema"]; //nombre de la base de datos
+        $usuario = $ajustes['database']['username'];
+        $contrasena = $ajustes['database']['password'];
+        $options = array(
+        PDO::ATTR_PERSISTENT    => true,
+        PDO::ATTR_ERRMODE       => PDO::ERRMODE_EXCEPTION,
+        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+    );
+        $dsn = 'mysql:host=' . $servidor . ';dbname=' . $basedatos;
 		try{
-			return $this->datahost = new PDO(
-					"mysql:host=$servidor;port=$puerto;dbname=$basedatos",
-					$ajustes['database']['username'], //usuario
-					$ajustes['database']['password'], //constrasena
-					array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8")
-			);
+			return $this->datahost = new PDO($dsn,$usuario,$contrasena, $options);
 		}
 		catch(PDOException $e){
 			echo "Error en la conexión: ".$e->getMessage();

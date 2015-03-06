@@ -71,8 +71,9 @@ class Libros
     }
     
     public function actualizarEstadoLibro($estado,$valores){
-    	$sql='UPDATE tblLibros SET estado ='.$estado.' WHERE id_libro IN (?)';
-    	$this->oConectar->ejecutarSentencia($valores,$sql);
+    	$oCnx = new Conexion();
+        $sql='UPDATE tblLibros SET estado ='.$estado.' WHERE id_libro IN (?)';
+    	$oCnx->ejecutarSentencia($valores,$sql);
     }
 }
 ?>

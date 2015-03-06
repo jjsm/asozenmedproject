@@ -57,7 +57,10 @@
     $stmt->execute();
     $results_array=$stmt->fetchAll(PDO::FETCH_ASSOC);
     $json=json_encode( $results_array );
-    $nRows=$conn->query("SELECT COUNT(*) AS count FROM tblDetallePrestamo ")->fetchColumn();
+    $nRows=$conn->query("SELECT COUNT(*) AS count FROM  tblDetallePrestamo detallePrestamo
+                    INNER JOIN tblPrestamos prestamos ON detallePrestamo.idPrestamo = prestamos.id_prestamo
+					INNER JOIN tblLibros libros ON detallePrestamo.idLibros=libros.id_libro 
+                    WHERE prestamos.id_prestamo =$id  ")->fetchColumn();
     header('Content-Type: application/json'); //tell the broswer JSON is coming
     if (isset($_REQUEST['rowCount']) ) //Means we're using bootgrid library
     echo "{ \"current\": $current, \"rowCount\":$rows, \"rows\": ".$json.", \"total\": $nRows }";

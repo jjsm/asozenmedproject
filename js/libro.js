@@ -13,7 +13,7 @@ $(document).ready(function () {
     
     
     //-------------------------------------------------------------------------------------------------------aGREGARlIBRO
-         $("#btnAgregarLibro").off("click.AgregarLibro").on("click.AgregarLibro",function(){
+         $("#btnAgregarLibro").on("click",function(){
         adminLibro();
      })
 

@@ -56,22 +56,26 @@ function insertarPrestamo($prestamos){
 	$practicante = $_POST['id-practicante'];
 	$prestado = $_POST['id-prestado'];
 	$idLibro = $_POST['id-libro'];
-	$idPrestamo = $_POST['id'];
+	$idPrestamo = $_GET["id-prestamo"];
     $libros = Libros::singleton();
 	//Valida antes si el encabezado ya no fue creado cuando se inserta un libro por primera vez 
-
+    
+    
 	if(empty($idPrestamo)){
-        echo "ENTRO!!";
+        
 		$valores = array($f_prestamo,$f_entrega,$practicante,$prestado);
 		$idPrestamo =$prestamos->insertarEncabezadoPrestamo($valores);
+
 	}
     
-    echo  "idPrestamo ".$idPrestamo;
+ 
     //Si existe libro y prestamo se agrega al detalle
 	if(!empty($idPrestamo) && !empty($idLibro)){
+        
 		$valores2=array($idLibro,$idPrestamo);
+
 		$prestamos->insertarLibroPrestamo($valores2);
-        //
+        
         $valores3=array($idLibro);
         //ESTADOLIBRO 0 NO DISPONIBLE
         $libros->actualizarEstadoLibro(0,$valores3);
@@ -128,18 +132,22 @@ function actualizarPrestamo($prestamos){
 function cerrarPrestamo($prestamos){
     $idPrestamo= $_GET['id'];
     $valores = array($idPrestamo);
-    //Cambia  fecha de  entrega del libro y estado del detalle
+    //Cambia  fecha de  entrega del libro y estado del detalle en detalleprestamo
+    
     $prestamos->cerrarPrestamo($valores);
     //cambia el estado del prestamo y fecha de entregado
+
     $prestamos->actEstadoPrestamo($valores);
     //consulta lo libros que no han sido entregados
-    $result = $prestamos->consultarLibrosPrestamo($valores);
-    
-    $idLibros = implode(",", $result);
  
+    $result = $prestamos->consultarLibrosPrestamo($valores);
+    //devuelve string de los libros
+    $idLibros = implode(",", $result);
+
     //cambia el estado del libro para poner disponible
     $valores2 = array($idLibros);
     $libros = Libros::singleton();
+
     $libros->actualizarEstadoLibro(1,$valores2);
    
 }
