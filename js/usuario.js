@@ -50,7 +50,7 @@ function adminUsuario(id,cedula,usuario,correo,celular,telefono,option){
         $("#dlgUsuario").dialog({
         resizable:false,
         title:'Usuario.',
-        height:320,
+        height:725,
         width:450,
         modal:true,
         open:function(){

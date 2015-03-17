@@ -38,8 +38,8 @@ function adminLibro(id_libro ,titulo ,codigo ,descripcion ,editorial ,año ,obse
         $("#dlgLibro").dialog({
         resizable:false,
         title:'Libro.',
-        height:370,
-        width:450,
+        height:725,
+        width:600,
         modal:true,
         open:function(){
         	

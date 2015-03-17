@@ -60,6 +60,7 @@ function insertarPrestamo($prestamos){
     $libros = Libros::singleton();
 	//Valida antes si el encabezado ya no fue creado cuando se inserta un libro por primera vez 
     
+    //echo "1 ". $f_prestamo." 2 ". $f_entrega." 3 ". $practicante ." 4 ".$prestado." 5 ". $idLibro ." 6 ".$idPrestamo;
     
 	if(empty($idPrestamo)){
         

@@ -5,6 +5,7 @@
 	<script type="text/javascript" src="js/libro.js"></script>
 	<style type="text/css">
 		#frmLibro label.error, .output {color:#FB3A3A;font-weight:bold;}
+        .bs-example{margin: 20px;}
 	</style>
     
     </head>
@@ -29,16 +30,52 @@
     </table>
     
 	<!-- Dialogos -->
-	<div class='edit_modal' id='dlgLibro' style='display:none'>
-		<form  id='frmLibro' method='post'  style="display:none" class="form-inline" role="form">
+	<div class='edit_modal bs-example' id='dlgLibro' style='display:none'>
+		<form  id='frmLibro' method='post'  style="display:none" class="form-horizontal" role="form">
 	        					 <input type='hidden' name='id'  id='id-libro'>
-	        <div class="form-group"><input type='text' class="form-control required clean" placeholder="Titulo" name='titulo' id='titulo' /></div>
-	        <div class="form-group"><input type='text' class="form-control required clean" placeholder="Codigo" name='codigo' id='codigo' /></div>
-	        <div class="form-group"><input type='text' class="form-control clean" placeholder="Descripcion" name='descripcion' id='descripcion' /></div>
-	        <div class="form-group"><input type='text' class="form-control required clean" placeholder="Editorial" name='editorial' id='editorial' /></div>
-	       	<div class="form-group"><input type='text' class="form-control required clean" placeholder="Año" name='año' id='año' /></div>
-	        <div class="form-group"><input type='text' class="form-control clean" placeholder="Observaciones" name='observaciones' id='observaciones' /></div>
-	        <div class="form-group"><input type='text' class="form-control required clean" placeholder="Autor" name='autores' id='autores' /></div>
+            <div class="form-group">
+                <label for="titulo" class="control-label col-xs-2">Titulo</label>
+                <div class="col-xs-11">
+                 <input type="text" class="form-control required clean" placeholder="Titulo" name='titulo' id='titulo'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="codigo" class="control-label col-xs-2">Codigo</label>
+                <div class="col-xs-11">
+                 <input type="text" class="form-control required clean" placeholder="Codigo" name='codigo' id='codigo'>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="descripcion" class="control-label col-xs-2">Descripcion</label>
+                <div class="col-xs-11">
+                 <input type="text" class="form-control required clean" placeholder="descripcion" name='descripcion' id='descripcion'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="editorial" class="control-label col-xs-2">Editorial</label>
+                <div class="col-xs-11">
+                 <input type="text" class="form-control required clean" placeholder="editorial" name='editorial' id='editorial'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="año" class="control-label col-xs-2">Año</label>
+                <div class="col-xs-11">
+                 <input type="text" class="form-control required clean" placeholder="Año" name='año' id='año'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="observaciones" class="control-label col-xs-2">Observaciones</label>
+                <div class="col-xs-11">
+                 <input type="text" class="form-control required clean" placeholder="Observaciones" name='observaciones' id='observaciones'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="autores" class="control-label col-xs-2">Autor</label>
+                <div class="col-xs-11">
+                 <input type="text" class="form-control required clean" placeholder="Autor" name='autores' id='autores'>
+                </div>
+            </div>
         </form> 
         
         <form  id='frmLibroCancel' method='post' action='' style="display:none">

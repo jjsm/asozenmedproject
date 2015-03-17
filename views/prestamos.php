@@ -24,21 +24,49 @@
                 </tr>
             </thead>	
     </table>
+    
+    
+  
 
 	<!-- Dialogos -->
-	<div  id='dlgPrestamo' style='display:none'>
-		<form  id='frmPrestamo' method='post' class="form-inline" role="form" >
+	<div  class=' bs-example' id='dlgPrestamo' style='display:none'  >
+		<form  id='frmPrestamo' method='post' class="form-horizontal" role="form" >
 	        					 <input type='hidden' name='id'  id='id-prestamo'>
-	        <div class="form-group"><input type='text'  class="form-control required clean" name='prestamo' id='txtPrestamo' placeholder="Fecha Prestamo"  /></div><br>
-	       	<div class="form-group"><input type='text'  class="form-control required clean" name='entrega' id='txtEntrega' placeholder="Fecha Entrega" /></div><br>
-	        <div class="form-group"><input type='text'  class="form-control required clean" name='practicante' id='txtPracticante' placeholder="Busque Practicante"/></div><br>
-	        					<input type='hidden' name='id-practicante'  id='id-practicante'>
-	        <div class="form-group"><input type='text'  class="form-control required clean" name='prestado' id='txtPrestado' placeholder="Busque Prestador"/></div><br>
-	        					<input type='hidden' name='id-prestado'  id='id-prestado'>
-	        					
-	        <div class="form-group"><input type='text' class="form-control required clean" name='libro' id='txtLibro' placeholder="Busque Un Libro"/>
-	        						<input type='button' class="form-control " name="insertarlibro" value="Ingrese Libro" id="btnInsertarLibro" onclick="insertarLibroDetalle()"/></div><br>
-	        						<input type='hidden' name='id-libro'  id='id-libro'>
+             <div class="form-group">
+                <label for="txtPrestamo" class="control-label col-xs-2">Prestó</label>
+                <div class="col-xs-4">
+                    <input type="text" class="form-control required clean" placeholder="Fecha Prestamo" name='prestamo' id='txtPrestamo'>
+                </div>
+                     <label for="txtEntrega" class="control-label col-xs-2">Entregó</label>
+                <div class="col-xs-4">
+                    <input type="text" class="form-control required clean" placeholder="Fecha Entrega" name='entrega' id='txtEntrega'>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="txtPracticante" class="control-label col-xs-2">Practicante</label>
+                <div class="col-xs-4">
+                     <input type="text" class="form-control required clean" placeholder="Busque Practicante" name='practicante' id='txtPracticante'>
+                     <input type='hidden' name='id-practicante'  id='id-practicante'>
+                </div>
+                <label for="txtPrestado" class="control-label col-xs-2">Facilita</label>
+                <div class="col-xs-4">
+                     <input type="text" class="form-control required clean" placeholder="Busque Facilitador" name='prestado' id='txtPrestado'>
+                    <input type='hidden' name='id-prestado'  id='id-prestado'>
+                </div>
+            </div>
+               					
+	        <div class="form-group">
+                <label for="txtLibro" class="control-label col-xs-2">Libro</label>
+                <div class="col-xs-4">
+                    <input type='text' class="form-control required clean" name='libro' id='txtLibro' placeholder="Busque Un Libro"/>
+	        		
+                </div>  
+                <div class="col-xs-4">
+                    <input type='button' class="form-control " name="insertarlibro" value="Ingrese Libro" id="btnInsertarLibro" onclick="insertarLibroDetalle()"/>
+                </div>
+            </div><br>
+	        <input type='hidden' name='id-libro'  id='id-libro'>
 	        					
 	        					
         </form> 

@@ -23,6 +23,9 @@
 	
 	<style type="text/css">
 		#frmUsuario label.error, .output {color:#FB3A3A;font-weight:bold;}
+        
+    .bs-example{margin: 20px;}
+        
 	</style>
 	
 </head>
@@ -58,15 +61,41 @@
     </div>
 </div>
 <!-- Dialogos -->
-<div class='edit_modal' id='dlgUsuario' style='display:none'>
+<div class='edit_modal bs-example' id='dlgUsuario' style='display:none'>
 			
-		<form id='frmUsuario' method='post' style="display:none" class="form-inline" role="form">
+		<form id='frmUsuario' method='post' style="display:none" class="form-horizontal" role="form">
 	        					 <input type='hidden' name='id'  id='id-usuario'>
-	        <div class="form-group"><input type='text'   name='cedula' id='cedula'  class="required clean form-control" placeholder="Cedula"/></div>
-	        <div class="form-group"><input type='text'  name='usuario' id='name-user'  class="required clean form-control" placeholder="Usuario"/></div>
-	        <div class="form-group"><input type='text'   name='correo' id='correo'  class="required clean form-control" placeholder="Correo"/></div>
-	        <div class="form-group"><input type='text'  name='celular' id='celular'  class="required clean form-control" placeholder="Celular"/></div>
-	        <div class="form-group"><input type='text' name='telefono' id='telefono'  class="required clean form-control" placeholder="Telefono"/></div>
+           <div class="form-group">
+                <label for="cedula" class="control-label col-xs-2">Cedula</label>
+                <div class="col-xs-11">
+                 <input type="text" class="form-control required clean" placeholder="Cedula" name='cedula' id='cedula'>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="name-user" class="control-label col-xs-2">Usuario</label>
+                <div class="col-xs-11">
+                 <input type="text" class="form-control required clean" placeholder="Usuario" name='usuario' id='name-user'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="correo" class="control-label col-xs-2">Correo</label>
+                <div class="col-xs-11">
+                 <input type="text" class="form-control required clean" placeholder="Correo" name='correo' id='correo'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="celular" class="control-label col-xs-2">Celular</label>
+                <div class="col-xs-11">
+                 <input type="text" class="form-control required clean" placeholder="Celular" name='celular' id='celular'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="telefono" class="control-label col-xs-2">Telefono</label>
+                <div class="col-xs-11">
+                 <input type="text" class="form-control required clean" placeholder="Telefono" name='telefono' id='telefono'>
+                </div>
+            </div>
         </form> 
         
         <form  id='frmUsuarioCancel' method='post' action='' style="display:none">
