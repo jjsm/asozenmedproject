@@ -52,12 +52,13 @@ class Usuario
     
     public function insertUsuario($valores)
     {		
-    	$sql='INSERT INTO tblusuarios VALUES (null,?,?,?,?,?)';
+    	$sql='INSERT INTO tblusuarios VALUES (null,?,?,?,?,?,?,?,?,?,?)';
     	$this->oConectar->ejecutarSentencia($valores,$sql);
     }
     
     public function actualizarUsuario($valores){
-    	$sql='UPDATE tblusuarios SET cedula = ?,usuario = ?, correo =?,celular = ?,telefono = ? WHERE id_usuario= ?';
+    	$sql='UPDATE tblusuarios SET cedula = ?,usuario = ?, correo =?,celular = ?,telefono = ? ,
+        edad = ?, ingreso = ?, direccion = ?, profesion = ?, descubrio = ?  WHERE id_usuario= ?';
     	$this->oConectar->ejecutarSentencia($valores,$sql);
     }
     

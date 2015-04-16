@@ -4,22 +4,16 @@ asozenmedproject
 ###Por hacer
 
 - bloquear usuarios con mas de tres libros prestados o desees prestar mas de tres libros
-- restringir libros en 0
 - hacer filtro en prestamo con prestamos cerrados o abiertos
-- al crear libro o usuario o prestamo dejarlo en la pagina y solo actualizar el grid
-- al editar prestamo o cerrar prestamo actualizar el grid
 - no mostrar los prestamos entregados - habilitar un dropdown para mostrar - prestados y no prestados
 - al abrir la primera vez el primer grid, este se carga sin datos - el de prestamos
 - prestamos -autocomplete de libros - me muestra un libro inactivo pero carga otro en el grid de detaller prestamo
 - habilitar search
-- ###Por hacer
-- bloquear usuarios con mas de tres libros prestados o desees prestar mas de tres libros
-- restringir libros en 0
-- hacer filtro en prestamo con prestamos cerrados o abiertos
-- al nombre del libro no restringir con menos de 10 caracteres
-
-
-tabla estado --->parcial/ completo,aplazado, pasofecha
+- validar libro si hay disponibe segun numero de ejemplares
+- al darle cerrar al prestamo actualizar grid - y actualizar fecha de Devuelto
+- IMPORTANTE al ingresar el primer libro a un prestamo recien creado no carga ningun libro en el  grid
+- IMPORTANTE en el detalle del prestamo al entregar un libro se pone 0 pero en el encabezado del prstamo al cerrarlo el libro o el detale se pone en 1 de nuevo
+- Pensar la forma de entregsr los libros de manera  diferente
 
 CREATE DATABASE asozenmed;
 
@@ -30,36 +24,31 @@ usuario varchar(50) not null,
 correo varchar(50) not null,
 celular varchar(15) not null,
 telefono varchar(15) not null,
-
-- edad integer not null,
-- fechaIngreso datetime not null,
-- direccion varchar(100),
-- profesion varchar(100),
-- descubrio varchar(150),
+edad integer not null,
+fechaIngreso datetime not null,
+direccion varchar(100),
+profesion varchar(100),
+descubrio varchar(150),
 PRIMARY KEY (id_usuario)
 );
 
 CREATE TABLE tblLibros(
 id_libro integer auto_increment,
-- numeroAcceso,
+numeroAcceso varchar(100),
 codigo varchar(50) not null,
 autores varchar(30), - mencion de responsabilidad
 titulo varchar(500) not null,
 editorial varchar(100) not null,
 año integer not null,
-- isbn
-- serie
-- pais
-- paginas
-- ejemplares
-- descFisica
-- observaciones
-- encuadernar
-descripcion varchar(500) not null,
-
-observaciones varchar(500) not null,
+isbn varchar(100),
+serie varchar(100),
+pais  varchar(100),
+paginas integer,
+ejemplares integer,
+descripcion varchar(500),
+observaciones varchar(500),
+encuadernar boolean,
 estado boolean ,
-
 PRIMARY KEY (id_libro)
 );
 

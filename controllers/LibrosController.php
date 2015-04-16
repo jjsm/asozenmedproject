@@ -41,30 +41,45 @@ function listarLibro($libros){
 
 function insertarLibro($libros){
 	
-	$titulo = $_POST['titulo'];
-	$codigo = $_POST['codigo'];
-	$descripcion = $_POST['descripcion'];
-	$editoria = $_POST['editorial'];
-	$ano = $_POST['año'];
-	$observaciones = $_POST['observaciones'];
-	$autores = $_POST['autores'];
+          $numeroAcceso= $_POST['numeroAcceso'];
+          $codigo= $_POST['codigo'];
+          $autor= $_POST['autor'];
+          $titulo= $_POST['titulo'];
+          $editorial= $_POST['editorial'];
+          $ano= $_POST['ano'];
+          $isbn= $_POST['isbn'];
+          $serie= $_POST['serie'];
+          $pais= $_POST['pais'];
+          $pagina= $_POST['pagina'];
+          $ejemplares= $_POST['ejemplares'];
+          $descripcion= $_POST['descripcion'];
+          $observaciones= $_POST['observaciones'];
+          $encuadernar= $_POST['encuadernar'];
 	
-	$valores = array($titulo,$codigo,$descripcion,$editoria,$ano,$observaciones,$autores);
+	$valores = array($numeroAcceso,$codigo,$autor,$titulo,$editorial,$ano,$isbn,$serie,$pais,$pagina,$ejemplares,$descripcion,$observaciones,$encuadernar);
 	$libros->insertarLibro($valores);
 }
 
 function editarLibro($libros){
 	
-	$id = $_POST['id'];
-	$titulo = $_POST['titulo'];
-	$codigo = $_POST['codigo'];
-	$descripcion = $_POST['descripcion'];
-	$editoria = $_POST['editorial'];
-	$ano = $_POST['año'];
-	$observaciones = $_POST['observaciones'];
-	$autores = $_POST['autores'];
+	$id = $_GET['idLibro'];
+    echo "Identificador: ".$id;
+    $numeroAcceso= $_POST['numeroAcceso'];
+    $codigo= $_POST['codigo'];
+    $autor= $_POST['autor'];
+    $titulo= $_POST['titulo'];
+    $editorial= $_POST['editorial'];
+    $ano= $_POST['ano'];
+    $isbn= $_POST['isbn'];
+    $serie= $_POST['serie'];
+    $pais= $_POST['pais'];
+    $pagina= $_POST['pagina'];
+    $ejemplares= $_POST['ejemplares'];
+    $descripcion= $_POST['descripcion'];
+    $observaciones= $_POST['observaciones'];
+    $encuadernar= $_POST['encuadernar'];
 	
-	$valores = array($titulo,$codigo,$descripcion,$editoria,$ano,$observaciones,$autores,$id);
+    $valores = array($numeroAcceso,$codigo,$autor,$titulo,$editorial,$ano,$isbn,$serie,$pais,$pagina,$ejemplares,$descripcion,$observaciones,$encuadernar,$id);
 	
 	$libros->actualizarLibro($valores);
 }

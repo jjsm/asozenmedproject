@@ -44,8 +44,13 @@ function insertarUsuario($usuarios){
 	$correo = $_POST['correo'];
 	$celular = $_POST['celular'];
 	$telefono = $_POST['telefono'];
+    $edad = $_POST['edad'];
+    $ingreso = date('Y-m-d', strtotime($_POST['ingreso']));
+    $direccion = $_POST['direccion'];
+    $profesion = $_POST['profesion'];
+    $descubrio = $_POST['descubrio'];
 	
-	$valores = array($cedula,$usuario,$correo,$celular,$telefono);
+	$valores = array($cedula,$usuario,$correo,$celular,$telefono,$edad,$ingreso,$direccion,$profesion,$descubrio);
 	
     $usuarios->insertUsuario($valores);	
 }
@@ -59,7 +64,6 @@ function editarUsuario($usuarios){
 	$celular = $_POST['celular'];
 	$telefono = $_POST['telefono'];
 	$valores=array($cedula,$usuario,$correo,$celular,$telefono,$id);
-	echo "ID ". $id ."CEDULA " .$cedula . "USUARIOA ". $usuario ."CORREO " . "CORREO " . $correo.  "CELULAR ".$celular . "TELEFONO ".$telefono;
     $usuarios->actualizarUsuario($valores);
 }
 

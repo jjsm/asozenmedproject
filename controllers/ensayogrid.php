@@ -38,7 +38,9 @@
     else
     $limit=" LIMIT $limit_l,$limit_h ";
     //NOTE: No security here please beef this up using a prepared statement - as is this is prone to SQL injection.
-    $sql="SELECT id_usuario,cedula,usuario,correo,celular,telefono FROM tblusuarios $limit ";
+    $sql="SELECT id_usuario,cedula,usuario,correo,celular,telefono,edad ,fechaIngreso ,direccion ,profesion  ,descubrio  FROM tblusuarios $limit ";
+    
+        
     $stmt=$conn->prepare($sql);
     $stmt->execute();
     $results_array=$stmt->fetchAll(PDO::FETCH_ASSOC);

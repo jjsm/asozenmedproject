@@ -6,11 +6,13 @@ $(document).ready(function () {
             formatters: {
         "commands": function(column, row)
         {
-        return "<input  value='Editar' onclick=\"adminLibro('"+row.id_libro+"','"+row.titulo+"','"+row.codigo+"','"+row.descripcion+"','"+row.editorial+"','"+row.año+"','"+row.observaciones+"','"+row.estado+"','" +row.autores+"', 'editar');\" type='button' class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id_usuario + "\"><span class=\"fa fa-pencil\"></span></input> " +
-        "<input type='button' value='Eliminar' onclick=\"adminLibro('"+row.id_libro+"','"+row.titulo+"','"+row.codigo+"','"+row.descripcion+"','"+row.editorial+"','"+row.año+"','"+row.observaciones+"','"+row.estado+"','" +row.autores+"','eliminar');\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id_usuario + "\"><span class=\"fa fa-trash-o\"></span></input>";
+        return "<input  value='Editar' onclick=\"adminLibro('"+row.id_libro+"','"+row.numeroAcceso+"','"+row.codigo+"','"+row.autores+"','"+row.titulo+"','"+row.editorial+"','"+row.año+"'   ,'"+row.isbn+"','"+row.serie+"','"+row.pais+"','"+row.paginas+"','"+row.ejemplares+"'   ,'"+row.descripcion+"','"+row.observaciones+"','"+row.encuadernar+"','"+row.estado+"', 'editar');\" type='button' class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id_usuario + "\"><span class=\"fa fa-pencil\"></span></input> " +
+        "<input type='button' value='Eliminar' onclick=\"adminLibro('"+row.id_libro+"','"+row.numeroAcceso+"','"+row.codigo+"','"+row.autores+"','"+row.titulo+"','"+row.editorial+"','"+row.año+"'   ,'"+row.isbn+"','"+row.serie+"','"+row.pais+"','"+row.paginas+"','"+row.ejemplares+"'   ,'"+row.descripcion+"','"+row.observaciones+"','"+row.encuadernar+"','"+row.estado+"','eliminar');\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id_usuario + "\"><span class=\"fa fa-trash-o\"></span></input>";
         }}
         });
     
+    //------------------------------------------------------------------------------------------tabs
+
     
     //-------------------------------------------------------------------------------------------------------aGREGARlIBRO
          $("#btnAgregarLibro").on("click",function(){
@@ -19,47 +21,73 @@ $(document).ready(function () {
 
 });
 
-function adminLibro(id_libro ,titulo ,codigo ,descripcion ,editorial ,año ,observacion ,estado,autores,option){
-	 $("#frmLibroCancel").hide();
+
+  
+
+function adminLibro(id_libro,numeroAcceso,codigo,autores,titulo,editorial,año,isbn,serie,pais,paginas,ejemplares,descripcion,observaciones,encuadernar,estado,option){
+
+    
+    $("#frmLibroCancel").hide();
 	 $("#frmLibro").show();
 	
 	//Agregar
-	var url = 'controllers/LibrosController.php?op=1';
+	var url = '/controllers/LibrosController.php?op=1';
 	
 	
 	if(option == 'editar'){
-		url = 'controllers/LibrosController.php?op=2';
-    var id = id_libro, titulo = titulo, codigo = codigo, descripcion = descripcion, editorial = editorial, año = año, observaciones= observacion, estado = estado,autores = autores;
+		url = '/controllers/LibrosController.php?op=2&idLibro='+id_libro;
+        var id_libro=id_libro,numeroAcceso=numeroAcceso,codigo=codigo,autores=autores,titulo=titulo,editorial=editorial,año=año,isbn=isbn,serie=serie,pais=pais,paginas=paginas,ejemplares=ejemplares,descripcion=descripcion,observaciones=observaciones,encuadernar=encuadernar,estado=estado;
+    
 	}else if(option == 'eliminar'){
-        url = 'controllers/LibrosController.php?op=3';
+        url = '/controllers/LibrosController.php?op=3';
    		 var id = id_libro, nombre = titulo;
 	}
 		
         $("#dlgLibro").dialog({
         resizable:false,
         title:'Libro.',
-        height:725,
-        width:600,
+        height:550,
+        width:700,
         modal:true,
         open:function(){
         	
         	$(".clean").val("");
         	
 			$("#frmLibro").validate({  
-				  
+
+  
 				rules: {  
-					titulo:{required: true,minlength: 10,},  
-					codigo:{required: true},                  
-					editorial:{required: true},        
-					año:{required: true,number:true},  
-					autores:{required: true} 
+                    numeroAcceso:{required: true}, 
+                    codigo:{required: true}, 
+                    autor:{required: true}, 
+                    titulo:{required: true}, 
+                    editorial:{required: true}, 
+                    ano:{required: true,number:true}, 
+                    isbn:{required: true}, 
+                    serie:{required: true}, 
+                    pais:{required: true}, 
+                    pagina:{required: true,number:true}, 
+                    ejemplares:{required: true,number:true}, 
+                    descripcion:{required: true}, 
+                    observaciones:{required: true}, 
+                    encuadernar:{required: true} 
 				},  
 				messages: {  
-					titulo:{required: "*Requerido" },  
-					codigo:{required: "*Requerido" },                 
-					editorial:{required: "*Requerido" },        
-					año:{required: "*Requerido" },  
-					autores:{required: "*Requerido" }
+                    numeroAcceso: {required: "*Requerido" },
+                    codigo: {required: "*Requerido" },
+                    autor: {required: "*Requerido" },
+                    titulo: {required: "*Requerido" },
+                    editorial: {required: "*Requerido" },
+                    ano: {required: "*Requerido" },
+                    isbn: {required: "*Requerido" },
+                    serie: {required: "*Requerido" },
+                    pais: {required: "*Requerido" },
+                    pagina: {required: "*Requerido" },
+                    ejemplares: {required: "*Requerido" },
+                    descripcion: {required: "*Requerido" },
+                    observaciones: {required: "*Requerido" }, 
+                    encuadernar: {required: "*Requerido" }
+
 				}  
 			});
         	
@@ -69,22 +97,29 @@ function adminLibro(id_libro ,titulo ,codigo ,descripcion ,editorial ,año ,obse
     		 $("#frmLibro").hide();
     		 $("#lbllibro").html(titulo);
         	}
-            	$("#id-libro").val(id);
-            	$("#titulo").val(titulo);
-            	$("#codigo").val(codigo);
-            	$("#descripcion").val(descripcion);
-            	$("#editorial").val(editorial);
-            	$("#año").val(año);
-            	$("#observaciones").val(observaciones);
-            	$("#autores").val(autores);
-            	$("#estado").val(estado);
+            
+              $("#id_libro").val(id_libro);
+              $("#txtNumeroAcceso").val(numeroAcceso);
+              $("#txtCodigo").val(codigo);
+              $("#txtAutor").val(autores);
+              $("#txtTitulo").val(titulo);
+              $("#txtEditorial").val(editorial);
+              $("#txtAno").val(año);
+              $("#txtIsbn").val(isbn);
+              $("#txtSerie").val(serie);
+              $("#txtPais").val(pais);
+              $("#txtPagina").val(paginas);
+              $("#txtEjemplares").val(ejemplares);
+              $("#txtDescripcion").val(descripcion);
+              $("#txtObservaciones").val(observaciones);
+              $("#txtEncuadernar").val(encuadernar);
         },
         buttons:{
             "Ok":function () {
             	
             	
-		if ($("#frmLibro").validate().form() == true){
-                $.ajax({
+		if ($("#frmLibro").validate().form() == true){    
+            $.ajax({
                     url : url,
                     type : $('#frmLibro').attr("method"),
                     data : $('#frmLibro').serialize(),

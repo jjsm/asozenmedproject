@@ -1,7 +1,12 @@
  <?php
     try {
-
-    $conn = new PDO("mysql:host=localhost;dbname=asozenmed", 'root', ''); // SQLite Database
+    $options = array(
+        PDO::ATTR_PERSISTENT    => true,
+        PDO::ATTR_ERRMODE       => PDO::ERRMODE_EXCEPTION,
+        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    );
+    $conn = new PDO("mysql:host=localhost;dbname=asozenmed", 'root', '', $options); // SQLite Database
     //$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $where =" 1=1 ";
     //$order_by="rating_imdb";
@@ -60,10 +65,12 @@
     $nRows=$conn->query("SELECT COUNT(*) AS count FROM  tblDetallePrestamo detallePrestamo
                     INNER JOIN tblPrestamos prestamos ON detallePrestamo.idPrestamo = prestamos.id_prestamo
 					INNER JOIN tblLibros libros ON detallePrestamo.idLibros=libros.id_libro 
-                    WHERE prestamos.id_prestamo =$id  ")->fetchColumn();
+                    WHERE prestamos.id_prestamo =$id  ");
+     $count=$nRows->fetchColumn() ;  
+        
     header('Content-Type: application/json'); //tell the broswer JSON is coming
     if (isset($_REQUEST['rowCount']) ) //Means we're using bootgrid library
-    echo "{ \"current\": $current, \"rowCount\":$rows, \"rows\": ".$json.", \"total\": $nRows }";
+    echo "{ \"current\": $current, \"rowCount\":$rows, \"rows\": ".$json.", \"total\":$count }";
     else
     echo $json; //Just plain vanillat JSON output
     exit;

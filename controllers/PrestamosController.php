@@ -55,13 +55,13 @@ function insertarPrestamo($prestamos){
 	$f_entrega = date('Y-m-d', strtotime($_POST['entrega']));
 	$practicante = $_POST['id-practicante'];
 	$prestado = $_POST['id-prestado'];
-	$idLibro = $_POST['id-libro'];
+	$idLibro = $_GET['id-libro'];
 	$idPrestamo = $_GET["id-prestamo"];
     $libros = Libros::singleton();
-	//Valida antes si el encabezado ya no fue creado cuando se inserta un libro por primera vez 
+	    
+   // echo "fprestamo ". $f_prestamo." f entrega  ". $f_entrega." practicante ". $practicante ." idprestadopor ".$prestado." idlibro ". $idLibro ." id prestamo ".$idPrestamo;
     
-    //echo "1 ". $f_prestamo." 2 ". $f_entrega." 3 ". $practicante ." 4 ".$prestado." 5 ". $idLibro ." 6 ".$idPrestamo;
-    
+    //Valida antes si el encabezado ya no fue creado cuando se inserta un libro por primera vez 
 	if(empty($idPrestamo)){
         
 		$valores = array($f_prestamo,$f_entrega,$practicante,$prestado);
@@ -134,22 +134,29 @@ function cerrarPrestamo($prestamos){
     $idPrestamo= $_GET['id'];
     $valores = array($idPrestamo);
     //Cambia  fecha de  entrega del libro y estado del detalle en detalleprestamo
-    
     $prestamos->cerrarPrestamo($valores);
-    //cambia el estado del prestamo y fecha de entregado
-
+    
+    //cambia el estado del prestamo y fecha de entregado en prestamo
     $prestamos->actEstadoPrestamo($valores);
-    //consulta lo libros que no han sido entregados
- 
+    
+    //consulta lo libros que no han sido entregados(estado 1)
     $result = $prestamos->consultarLibrosPrestamo($valores);
+    
     //devuelve string de los libros
-    $idLibros = implode(",", $result);
+    $idLibros = implode(",", $result);    
 
     //cambia el estado del libro para poner disponible
-    $valores2 = array($idLibros);
+    $valores2 =  explode(",",$idLibros);
+   // echo "1: ".$valores2[0]." 2: ".$valores2[1];
     $libros = Libros::singleton();
-
-    $libros->actualizarEstadoLibro(1,$valores2);
+    
+    
+    
+    for ($i = 0; $i < count($valores2); $i++) {
+        $arra= array($valores2[$i]);
+        $libros->actualizarEstadoLibro(1,$arra);
+    }
+    
    
 }
 

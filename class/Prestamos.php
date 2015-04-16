@@ -114,7 +114,7 @@ class Prestamos
     
     public function cerrarPrestamo($valores){
          $oCnx = new Conexion();    
-        $sql = 'UPDATE tblDetallePrestamo SET estadoDetalle=1, fechaDevuelto = Now() WHERE idPrestamo = ? AND  estadoDetalle!= 1 ';
+        $sql = 'UPDATE tblDetallePrestamo SET estadoDetalle=0, fechaDevuelto = Now() WHERE idPrestamo = ? AND  estadoDetalle!= 0 ';
         $oCnx->ejecutarSentencia($valores,$sql);
 
     }

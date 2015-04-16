@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html >
 <head>
+    <title>ASOCIACION ZEN MEDELLIN</title>
     <meta charset="utf-8" />
-    
-	<script type="text/javascript" src="js/prestamo.js"></script>
-</head>
-<body>
 
+    <script type="text/javascript" src="/js/prestamo.js"></script>
+    	
+
+	<style type="text/css">
+		#frmUsuario label.error, .output {color:#FB3A3A;font-weight:bold;}
+        #frmLibro label.error, .output {color:#FB3A3A;font-weight:bold;}
+        .bs-example{margin: 20px;}        
+	</style>
+	
+</head>
+    
+    <body>
+        
     <input type="button" value="Agregar" id="btnAgregarPrestamo" /> 
-    <table id="grid-data-prestamo" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" data-url="controllers/gridPrestamo.php">
+    <table id="grid-data-prestamo" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true" data-url="/controllers/gridPrestamo.php">
             <thead>
                 <tr>
                 <th data-column-id="idPrestamo" data-type="numeric" data-visible="false"  data-identifier="true">ID</th>
@@ -24,10 +34,9 @@
                 </tr>
             </thead>	
     </table>
-    
-    
-  
 
+
+  
 	<!-- Dialogos -->
 	<div  class=' bs-example' id='dlgPrestamo' style='display:none'  >
 		<form  id='frmPrestamo' method='post' class="form-horizontal" role="form" >
@@ -85,5 +94,5 @@
             </thead>	
     </table>
 	</div>
-</body>
+           </body>
 </html>

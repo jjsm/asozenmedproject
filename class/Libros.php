@@ -42,13 +42,15 @@ class Libros
     }
     
     public function insertarLibro($valores)
-    {		
-    	$sql='INSERT INTO tblLibros (titulo,codigo,descripcion,editorial,año,observaciones,estado,autores)VALUES (?,?,?,?,?,?,1,?)';
+            {		
+        
+        
+    	$sql='INSERT INTO tblLibros (numeroAcceso ,codigo ,autores ,titulo ,editorial ,año ,isbn ,serie ,pais ,paginas ,ejemplares ,descripcion ,observaciones,encuadernar ,estado )VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,1)';
     	$this->oConectar->ejecutarSentencia($valores,$sql);
     }
     
     public function actualizarLibro($valores){
-    	$sql='UPDATE tblLibros SET titulo = ?,codigo = ?,descripcion = ?,editorial = ?, año = ? , observaciones = ? , autores = ? WHERE id_libro = ?';
+    	$sql='UPDATE tblLibros SET numeroAcceso=? ,codigo=? ,autores=? ,titulo=? ,editorial=? ,año=? ,isbn=? ,serie=? ,pais=? ,paginas=? ,ejemplares=? ,descripcion=? ,observaciones=?,encuadernar=?  WHERE id_libro = ?';
     	$this->oConectar->ejecutarSentencia($valores,$sql);
     }
     
@@ -72,8 +74,14 @@ class Libros
     
     public function actualizarEstadoLibro($estado,$valores){
     	$oCnx = new Conexion();
-        $sql='UPDATE tblLibros SET estado ='.$estado.' WHERE id_libro IN (?)';
-    	$oCnx->ejecutarSentencia($valores,$sql);
+        
+       // echo "1: ".$valores[0]." 2: ".$valores[1]." 3: ".$valores[2];
+            
+            $sql='UPDATE tblLibros SET estado ='.$estado.' WHERE id_libro IN (?)';
+            $oCnx->ejecutarSentencia($valores,$sql);            
+
+        
+
     }
 }
 ?>
