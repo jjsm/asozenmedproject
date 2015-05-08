@@ -103,7 +103,7 @@ class Prestamos
     }
     
     public function actualizarFechaDetalle($valores){
-        $sql = 'UPDATE tblDetallePrestamo SET fechaDevuelto= Now(), estadoDetalle=0 WHERE id_detallePrestamo= ? ';
+        $sql = 'UPDATE tblDetallePrestamo SET fechaDevuelto= Now(), estadoDetalle=0 WHERE id_detallePrestamo= ? AND estadoDetalle != 0';
         $this->oConectar->ejecutarSentencia($valores,$sql);
     }
     

@@ -77,6 +77,26 @@ idPrestamo integer,
  FOREIGN KEY (idLibros) REFERENCES tblLibros(id_libro),
 PRIMARY KEY (id_detallePrestamo)
 );
+
+
+CREATE TABLE tblPracticas(
+id_practica integer auto_increment,
+practica varchar(200),
+fechapractica datetime,
+valorPract integer,
+PRIMARY KEY (id_practica)
+);
+
+CREATE TABLE tblDetallePracticas(
+id_detallePractica integer auto_increment,
+idUsuarios integer,
+valorpago integer,
+idPractica integer,
+PRIMARY KEY (id_detallePractica),
+ FOREIGN KEY (idPractica) REFERENCES tblPracticas(id_practica)
+);
+
+
 =================
 HACER COMMIT
 # Inicializamos el repositorio local Git

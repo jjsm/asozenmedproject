@@ -86,8 +86,8 @@ function editarLibro($libros){
 
 function eliminarLibro($libros){
 	
-	$id = $_POST['id'];
-    echo "id del usuario a eliminar".$id;
+	$id = $_GET['idLibro'];
+    //echo "id del usuario a eliminar".$id;
 	$valores = array($id);
 	$libros->borrarLibro($valores);
 	

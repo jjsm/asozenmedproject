@@ -39,7 +39,7 @@ function adminLibro(id_libro,numeroAcceso,codigo,autores,titulo,editorial,año,i
         var id_libro=id_libro,numeroAcceso=numeroAcceso,codigo=codigo,autores=autores,titulo=titulo,editorial=editorial,año=año,isbn=isbn,serie=serie,pais=pais,paginas=paginas,ejemplares=ejemplares,descripcion=descripcion,observaciones=observaciones,encuadernar=encuadernar,estado=estado;
     
 	}else if(option == 'eliminar'){
-        url = '/controllers/LibrosController.php?op=3';
+        url = '/controllers/LibrosController.php?op=3&idLibro='+id_libro;
    		 var id = id_libro, nombre = titulo;
 	}
 		

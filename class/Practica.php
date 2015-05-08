@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 
 require_once ("../class/Conexion.php");
 
-class Usuario
+class Practica
 {
     private static $instancia;
     private $oConectar ;

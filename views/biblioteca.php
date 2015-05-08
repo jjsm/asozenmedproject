@@ -47,7 +47,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="/index.php">Practicantes</a></li>
                 <li class="active"><a href="/views/biblioteca.php">Biblioteca</a></li>
-                <li><a href="#">Messages</a></li>
+                <li><a href="/views/practica.php">Practica</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">Login</a></li>
@@ -58,9 +58,8 @@
 
  <div id="tabsPrestamos" >
   <ul>
-      
+     <li><a href="../views/prestamos.php">Prestamos</a></li> 
      <li><a href="../views/libros.php">Libros</a></li>
-      <li><a href="#../views/prestamos.php">Prestamos</a></li>
   </ul>
   
 </div>

@@ -34,7 +34,7 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="index.php">Practicantes</a></li>
                 <li><a href="/views/biblioteca.php">Biblioteca</a></li>
-                <li><a href="#">Messages</a></li>
+                <li><a href="/views/practica.php">Practica</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">Login</a></li>
