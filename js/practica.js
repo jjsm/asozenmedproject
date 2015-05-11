@@ -37,7 +37,7 @@ $(document).ready(function () {
 			);
     
     function displayButtons(cellvalue, options, rowObject)
-    {  debugger;
+    {  
         var edit = "<input style='...' type='button' value='Edit' onclick=\"adminPractica('" + options.rowId + "');\"  />", 
              save = "<input style='...' type='button' value='Save' onclick=\"jQuery('#gridPractica').saveRow('" + options.rowId + "');\"  />", 
              restore = "<input style='...' type='button' value='Restore' onclick=\"jQuery('#gridPractica').restoreRow('" + options.rowId + "');\" />";
@@ -55,7 +55,7 @@ $(document).ready(function () {
 });
 
 
-function adminPractica(){   
+function adminPractica(id){   
     var fullDate = new Date();
     var twoDigitMonth = (fullDate.getMonth()+1)+"";if(twoDigitMonth.length==1)  twoDigitMonth="0" +twoDigitMonth;
     var twoDigitDate = fullDate.getDate()+"";if(twoDigitDate.length==1) twoDigitDate="0" +twoDigitDate;
@@ -69,6 +69,31 @@ function adminPractica(){
         $("#btnInsertarPracticante").data('idpractica',"0");
     }
     
+                $("#gridDetallePractica").jqGrid({
+				url: '/controllers/gridDetallePractica.php?idPractica='+$("#btnInsertarPracticante").data('idpractica'),
+				autowidth: true,
+                datatype: "json",
+				height: "auto",
+				autowidth:true,
+				colNames:['id_practica','usuario','valorpago'],
+				colModel:[
+					{name:'id_practica',index:'id_practica', width:300,hidden:true},
+                    {name:'usuario',index:'usuario', width:300},					
+                    {name:'valorpago',index:'valorpago', width:300}
+                    
+					],
+				viewrecords: true,
+				altRows: true,
+				pager:'#pager',
+				rowNum: 10,
+				rowList:[10,15,20]
+			}).navGrid('#pager', { view: false, del: false, add: false, edit: false, search:false},
+				{},//opciones edit
+				{}, //opciones add
+				{}, //opciones del
+				{multipleSearch:false,closeAfterSearch: false, closeOnEscape: false}//opciones search
+			);
+    
 		
         $("#dlgPractica").dialog({
         resizable:false,
@@ -80,11 +105,6 @@ function adminPractica(){
         	$(".clean").val("");
 			$("label.error").hide();
 			$(".error").removeClass("error");
-			if(option == 'eliminar'){
-        		 $("#frmUsuarioCancel").show();
-        		 $("#frmUsuario").hide();
-        		 $("#lblusuario").html(usuario);
-        	}
 			
 			$("#frmPractica").validate({  
   
@@ -116,36 +136,14 @@ function adminPractica(){
             
             
             //---------
-                $("#gridDetallePractica").jqGrid({
-				url: '/controllers/gridDetallePractica.php?idPractica='+$("#btnInsertarPracticante").data('idpractica'),
-				autowidth: true,
-                datatype: "json",
-				height: "auto",
-				autowidth:true,
-				colNames:['id_practica','practica','fechapractica' ,'valorPract','Action'],
-				colModel:[
-					{name:'id_practica',index:'id_practica', width:30,hidden:true},
-					{name:'practica',index:'practica', width:30},
-                    {name:'fechapractica',index:'fechapractica', width:30},
-                    {name:'valorPract',index:'valorPract', width:30},
-                    {name:'action',index:'action',sortable:false, formatter: displayButtons,width:10},
-					],
-				viewrecords: true,
-				altRows: true,
-				pager:'#pager',
-				rowNum: 10,
-				rowList:[10,15,20]
-			}).navGrid('#pager', { view: false, del: false, add: false, edit: false, search:false},
-				{},//opciones edit
-				{}, //opciones add
-				{}, //opciones del
-				{multipleSearch:false,closeAfterSearch: false, closeOnEscape: false}//opciones search
-			);
+             var url ='/controllers/gridDetallePractica.php?idPractica='+$("#btnInsertarPracticante").data('idpractica');
+            $("#gridDetallePractica").jqGrid('setGridParam', { url: url });
+            $("#gridDetallePractica").trigger("reloadGrid");
     
-    function displayButtons(cellvalue, options, rowObject)
-    { 
+            function displayButtons(cellvalue, options, rowObject)
+            { 
 
-    }
+            }
             //---------
 
             $("#txtPracticante").autocomplete({source:"/controllers/UsuariosController.php?op=4",minLength: 1,select: function(event, data) {
@@ -193,8 +191,8 @@ function insertarPracticantePractica ()	{
                                  
                                     $.ajax({
 									url :'/controllers/PracticaController.php?op=1&idPractica='+$("#btnInsertarPracticante").data('idpractica')+'&idPracticante='+$("#id-practicante").val() ,
-									type : $('#frmPrestamo').attr("method"),
-									data : $('#frmPrestamo').serialize(),
+									type : $('#frmPractica').attr("method"),
+									data : $('#frmPractica').serialize(),
 									complete:function (jqXHR,status) {
 									
                                         $("#id-practicante").val(jqXHR.responseText);
@@ -208,11 +206,10 @@ function insertarPracticantePractica ()	{
                                         datatype: "json",
                                         height: "auto",
                                         autowidth:true,
-                                        colNames:['id_practica','practica','fechapractica' ,'valorPract','Action'],
+                                        colNames:['id_practica','usuario','fechapractica' ,'valorPract','Action'],
                                         colModel:[
                                             {name:'id_practica',index:'id_practica', width:30,hidden:true},
-                                            {name:'practica',index:'practica', width:30},
-                                            {name:'fechapractica',index:'fechapractica', width:30},
+                                            {name:'usuario',index:'usuario', width:30},
                                             {name:'valorPract',index:'valorPract', width:30},
                                             {name:'action',index:'action',sortable:false, formatter: displayButtons,width:10},
                                             ],
@@ -226,7 +223,13 @@ function insertarPracticantePractica ()	{
                                         {}, //opciones add
                                         {}, //opciones del
                                         {multipleSearch:false,closeAfterSearch: false, closeOnEscape: false}//opciones search
-                                    );                                       
+                                    ); 
+                                        
+                                          function displayButtons(cellvalue, options, rowObject)
+                                            {  
+                                                var edit = "<input style='...' type='button' value='Edit' onclick=\"adminPractica('" + options.rowId + "');\"  />"; 
+                                               return edit;
+                                            }  
                                         //------------------------------------------------------
 	
 									},

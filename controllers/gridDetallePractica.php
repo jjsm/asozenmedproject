@@ -1,5 +1,6 @@
  <?php
-
+    $idPractica =$_GET["idPractica"];
+    
     $options = array(
         PDO::ATTR_PERSISTENT    => true,
         PDO::ATTR_ERRMODE       => PDO::ERRMODE_EXCEPTION,
@@ -37,7 +38,7 @@
 //		$se=" where ".implode(' and ',$b );		
 //	}
 	//Realizamos la consulta para saber el numero de filas que hay en la tabla con los filtros
-	$query = $conn->query("select count(*) from tblPracticas");//$se
+	$query = $conn->query("select count(*) from tblDetallePracticas");//$se
 	 
     if(!$query)
 		echo mysql_error();
@@ -55,7 +56,7 @@
 	}
      
 	//Creamos la consulta que va a ser enviada de una ves con la parte de filtrado
-	$sql = "select id_practica,practica,fechapractica ,valorPract from tblPracticas  ";//.$se;
+		$sql = "select id_detallePractica,usuario,valorpago   from tblPracticas prac INNER JOIN tblDetallePracticas deprac ON prac.id_practica =deprac.idPractica INNER JOIN  tblusuarios usr ON deprac.idUsuarios=usr.id_usuario WHERE idPractica = $idPractica ";//.$se;
 	if( !empty($post['orden']) && !empty($post['orderby']))
 		//Añadimos de una ves la parte de la consulta para ordenar el resultado
 		$sql .= " ORDER BY $post[orderby] $post[orden] ";
@@ -70,8 +71,8 @@
 	$result = array();
 	$i = 0;
 	foreach( $results_array as $row ){
-		$result[$i]['id']=$row["id_practica"];
-		$result[$i]['cell']=array($row["id_practica"],$row["practica"],$row["fechapractica"],$row["valorPract"]);
+		$result[$i]['id']=$row["id_detallePractica"];
+		$result[$i]['cell']=array($row["id_detallePractica"],$row["usuario"],$row["valorpago"]);
 		$i++;		
 	}
 	//Asignamos todo esto en variables de json, para enviarlo al navegador

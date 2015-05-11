@@ -93,7 +93,8 @@ idUsuarios integer,
 valorpago integer,
 idPractica integer,
 PRIMARY KEY (id_detallePractica),
- FOREIGN KEY (idPractica) REFERENCES tblPracticas(id_practica)
+ FOREIGN KEY (idPractica) REFERENCES tblPracticas(id_practica),
+ FOREIGN KEY (idUsuarios) REFERENCES tblusuarios(id_usuario)
 );
 
 

@@ -61,8 +61,10 @@
     
     <div id="tabs-1" style="align:center">
      <input type="button" value="Agregar" id="btnAgregarPractica" /><br><br>   
-    <table id='gridPractica'></table>
-    <div id='pager'></div>
+    <div style="align:center">
+        <table id='gridPractica'></table>
+        <div id='pager'></div>
+    </div>
 
     </div>
 </div>
@@ -106,9 +108,10 @@
 	        <input type='hidden' name='idpractica'  id='id-practica'>
             </div>     
     </form>
-    
-    <table id='gridDetallePractica'></table>
-    <div id='pager'></div>
+        <div style="align:center; right:50px;    margin-left: auto;margin-right: auto">
+        <table id='gridDetallePractica'></table>
+        <div id='pager'></div>
+    </div>
 </div>
 
 
